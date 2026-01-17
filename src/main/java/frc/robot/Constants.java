@@ -47,6 +47,7 @@ public class Constants {
     public static final int BackLeftDriveMotorID = 4;
     public static final int BackLeftSteerMotorID = 3;
     public static final int PidgeonID = 18;
+    public static final int ClimbMotorID = 20; 
 
      // Kinematics
     public static final double WheelBase = Units.inchesToMeters(23.75);
