@@ -62,7 +62,10 @@ public class Drivetrain extends SubsystemBase {
   private Translation2d RotationCenter = new Translation2d();
   private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
   
-  private Alliance ourAlliance = Alliance.Red;
+  private Alliance OurAlliance = Alliance.Red;
+  private Rotation2d HubAngle = Rotation2d.kZero;
+  private boolean FacingHub = false;
+  private double HubDistance = 0.0;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -100,10 +103,20 @@ public class Drivetrain extends SubsystemBase {
     // Update pose estimator with info from cameras
     UptadePoseWithCameras(); 
 
+    Translation2d hubCenter = (OurAlliance == Alliance.Blue) ? Constants.kBlueHub : Constants.kRedHub;
+    Translation2d robot2HubTranslation = hubCenter.minus(getPose().getTranslation());
+    HubAngle = robot2HubTranslation.getAngle();
+    HubDistance = robot2HubTranslation.getNorm();
+    
+    FacingHub = epsilonEquals(
+      0.0,
+      HubAngle.minus(getPose().getRotation()).getDegrees(),
+      Constants.kFacingHubTolerance
+    );
   }
 
   public void setAlliance(Alliance color) {
-    ourAlliance = color;
+    OurAlliance = color;
   }
 
   public Pose2d getPose() {

@@ -64,42 +64,46 @@ public class Constants {
     public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase / 2, -WheelBase / 2);
     public static final Translation2d BackLeftTranslation = new Translation2d(-WheelBase / 2, +WheelBase / 2);
     public static SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-            FrontRightTranslation,
-            FrontLeftTranslation,
-            BackRightTranslation,
-            BackLeftTranslation);
+        FrontRightTranslation,
+        FrontLeftTranslation,
+        BackRightTranslation,
+        BackLeftTranslation);
 
     public static final Matrix<N3, N1> kStateStdDevs = VecBuilder.fill(0.1,0.1,0.1);
     public static final Matrix<N3, N1> kVisionStdDevs = VecBuilder.fill(1,1,1);
 
-     // Path Planner
+    // Path Planner
     public static final double MassKG = 57;
     public static final double MOI = 6.883;
     public static final ModuleConfig SwerveConfig = new ModuleConfig(
-            Units.inchesToMeters(2),
-            kMaxSpeedMetersPerSecond,
-            1.0, 
-            DCMotor.getNeoVortex(1).withReduction(6.12),
-            50,
-            1);
+        Units.inchesToMeters(2),
+        kMaxSpeedMetersPerSecond,
+        1.0, 
+        DCMotor.getNeoVortex(1).withReduction(6.12),
+        50,
+        1);
     public static final RobotConfig ROBOTCONFIG = new RobotConfig(
-            MassKG,
-            MOI,
-            SwerveConfig,
-            FrontRightTranslation, FrontLeftTranslation, BackRightTranslation, BackLeftTranslation);
+        MassKG,
+        MOI,
+        SwerveConfig,
+        FrontRightTranslation, FrontLeftTranslation, BackRightTranslation, BackLeftTranslation);
     public static final PIDConstants TranslationPIDconstants = new PIDConstants(
-            30,
-            0.75,
-            0.0);
+        30,
+        0.75,
+        0.0);
     public static final PIDConstants RotationPIDconstants = new PIDConstants(
-            13.0,
-            0.20,
-            0.0);
-    
+        13.0,
+        0.20,
+        0.0);
     
     public static final double HighSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
     public static final double LowSpeedMetersPerSecond = Units.feetToMeters(10.0);
     
-
-    
+    public static final Translation2d kBlueHub = new Translation2d(
+        Units.inchesToMeters(182.1),
+        Units.inchesToMeters(158.85));
+    public static final Translation2d kRedHub = new Translation2d(
+        Units.inchesToMeters(469.1),
+        Units.inchesToMeters(158.85));
+    public static final double kFacingHubTolerance = 10.0;
 }
