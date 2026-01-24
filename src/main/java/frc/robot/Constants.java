@@ -48,6 +48,14 @@ public class Constants {
     public static final int BackLeftSteerMotorID = 3;
     public static final int PidgeonID = 18;
     public static final int ClimbMotorID = 20; 
+    public static final int IntakeExtensionMotorID = 16;
+    public static final int IntakeSpinningMotorID = 17;
+    public static final int LeftFlywheelMotorID = 21;
+    public static final int RightFlywheelMotorID = 22;
+    public static final int FloorMotorID = 10;
+    public static final int KickerMotorID = 11;
+    public static final int AlignmentMotorID = 12;
+
 
      // Kinematics
     public static final double WheelBase = Units.inchesToMeters(23.75);
