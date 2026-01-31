@@ -58,7 +58,6 @@ public class Drivetrain extends SubsystemBase {
 
   public Cameras Cams = new Cameras();
 
-  private boolean _DriveRobotRelative = false;
   private Translation2d RotationCenter = new Translation2d();
   private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
   
@@ -118,11 +117,13 @@ public class Drivetrain extends SubsystemBase {
   public void setAlliance(Alliance color) {
     OurAlliance = color;
   }
-
+  public Rotation2d getHubAngle(){
+    return this.HubAngle; 
+  }
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
-
+  
   public void resetPose(Pose2d pose) {
     poseEstimator.resetPosition(
         Pidgey.getRotation2d(),
@@ -293,32 +294,10 @@ public class Drivetrain extends SubsystemBase {
     return Pidgey.getRoll();
   }
 
-  public void setDriveRobotRelative() {
-    this._DriveRobotRelative = true;
-  }
-
-  public void setDriveFieldRelative() {
-    this._DriveRobotRelative = false;
-  }
-
-  public void toggleDriveRobotRelative() {
-    this._DriveRobotRelative = !this._DriveRobotRelative;
-  }
-
-  public Command toggleDriveRobotRelativeCommand(){ 
-    return runOnce(() -> {
-      toggleDriveRobotRelative();
-    }).asProxy();
-  }
-
   public Command setDriveSpeedCommand(double newSpeed) {
     return runOnce(() -> {
       MaxSpeed = newSpeed;
     }).asProxy();
-  }
-
-  public boolean getDriveRobotRelative() {
-    return this._DriveRobotRelative;
   }
 
   public void setHighSpeed() {

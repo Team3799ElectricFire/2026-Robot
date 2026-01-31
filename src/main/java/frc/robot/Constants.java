@@ -22,7 +22,7 @@ public class Constants {
     public static final double DrivingIgain = 0;
     public static final double DrivingDgain = 0;
     public static final double DrivingFFgain = 1.0/565.0;
-    
+
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
@@ -36,8 +36,15 @@ public class Constants {
     public static final double kFrontLeftChassisAngularOffset = 0.2272288; // CAN ID 1
     public static final double kBackRightChassisAngularOffset = 0.4184715; // CAN ID 5
     public static final double kBackLeftChassisAngularOffset = 0.0312085;  // CAN ID 3
+    
+    // driving 
+    public static final double panRateOfChangeLimit = 10.0;
+    public static final double rotRateOfChangeLimit = 10.0;
+    public static final double minThumbstickMagnitude = 0.1;
+    public static final double teleopTurningPgain = 0.1;
+    public static final double teleopTurningDgain = 0.01;
 
-     // CanbusID
+    // CanbusID
     public static final int FrontRightDriveMotorID = 8;
     public static final int FrontRightSteerMotorID = 7;
     public static final int FrontLeftDriveMotorID = 2;
@@ -106,4 +113,6 @@ public class Constants {
         Units.inchesToMeters(469.1),
         Units.inchesToMeters(158.85));
     public static final double kFacingHubTolerance = 10.0;
+    
+   
 }

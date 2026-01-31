@@ -11,11 +11,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.DriveDefault;
+import frc.robot.Commands.DriveIntake;
+import frc.robot.Commands.DriveShooting;
 import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
-  private XboxController driver = new XboxController(0);
-  private XboxController codriver = new XboxController(1);
+  private CommandXboxController driver = new CommandXboxController(0);
+  private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
   private final SendableChooser<Command> autoChooser;
 
@@ -35,7 +39,11 @@ public class RobotContainer {
     drivetrain.setAlliance(color);
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    drivetrain.setDefaultCommand(new DriveDefault(drivetrain,driver::getLeftY, driver::getLeftX, driver::getRightX));
+    driver.rightBumper().whileTrue(new DriveIntake(drivetrain,driver::getLeftY,driver::getLeftX));
+    driver.rightTrigger().whileTrue(new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX));
+  }
 
   public Command getAutonomousCommand() {
      return autoChooser.getSelected();
