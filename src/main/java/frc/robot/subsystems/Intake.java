@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     ExtensionConfig.inverted(false);
-    ExtensionConfig.limitSwitch
+    ExtensionConfig.limitSwitch //TODO replace limitswitches with encoder 
       .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
       .reverseLimitSwitchType(Type.kNormallyOpen)
       .forwardLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
