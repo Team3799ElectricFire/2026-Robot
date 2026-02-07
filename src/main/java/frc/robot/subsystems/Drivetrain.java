@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.reduxrobotics.sensors.canandgyro.Canandgyro;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -100,15 +101,12 @@ public class Drivetrain extends SubsystemBase {
     // Update pose estimator with info from gyro and swerve modules
     poseEstimator.update(Pidgey.getRotation2d(), getModulePositions());
 
-    // Update pose estimator with info from cameras
-    UptadePoseWithCameras(); 
-
     Translation2d hubCenter = (OurAlliance == Alliance.Blue) ? Constants.kBlueHub : Constants.kRedHub;
     Translation2d robot2HubTranslation = hubCenter.minus(getPose().getTranslation());
     HubAngle = robot2HubTranslation.getAngle();
     HubDistance = robot2HubTranslation.getNorm();
     
-    FacingHub = epsilonEquals(
+    FacingHub = MathUtil.isNear(
       0.0,
       HubAngle.minus(getPose().getRotation()).getDegrees(),
       Constants.kFacingHubTolerance
@@ -158,17 +156,6 @@ public class Drivetrain extends SubsystemBase {
     BackRightModule.setDesiredState(moduleStates[2]);
     BackLeftModule.setDesiredState(moduleStates[3]);
 
-  }
-
-  private void UptadePoseWithCameras(){
-    // var EstimatedLowPose = Cams.getEstimatedPoseLowCamera();
-    // EstimatedLowPose.ifPresent(
-    //   est -> {
-    //     var estStdDevs = Cams.getLowCameraEstStdDevs();
-    //     addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-    //   }
-    // );
-    // TODO implement cameras
   }
 
   public void driveRobotRelative(double xSpeed, double ySpeed, double rot) {
@@ -336,9 +323,4 @@ public class Drivetrain extends SubsystemBase {
   public void resetRotationCenterRobot() {
     RotationCenter = new Translation2d();
   }
-
-  public boolean epsilonEquals(double a, double b, double epsilon) {
-    return (a-epsilon <= b) && (a+epsilon >= b);
-  }
-
 }
