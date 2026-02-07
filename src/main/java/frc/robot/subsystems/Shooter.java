@@ -31,8 +31,9 @@ public class Shooter extends SubsystemBase {
     LeftFlywheelConfig.inverted(false);
     LeftFlywheelConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(0, 0, 0); //TODO tune pid
-    LeftFlywheelConfig.encoder.velocityConversionFactor(1.0);//TODO get conversion from mechanical ppl
+      .pid(Constants.ShooterPgain, Constants.ShooterIgain, Constants.ShooterDgain)
+      .feedForward.kS(Constants.ShooterKs).kV(Constants.ShooterKv); 
+    LeftFlywheelConfig.encoder.velocityConversionFactor(1.0);
     LeftFlywheelMotor.configure(LeftFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -42,6 +43,9 @@ public class Shooter extends SubsystemBase {
   }
   public void FlywheelForward(){
     LeftFlywheelMotor.set(0.5);
+  }
+  public void FlywheelVoltage(double Volts){
+    LeftFlywheelMotor.setVoltage(Volts);
   }
   public void FlywheelBackward(){
    LeftFlywheelMotor.set(-0.5); 

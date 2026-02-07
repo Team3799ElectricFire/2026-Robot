@@ -32,6 +32,18 @@ public class Constants {
     public static final double IntakeForwardSoftLimit = 0;
     public static final double IntakeReverseSoftLimit = 0;
 
+    // climb pid
+    public static final double ClimberPgain = 0;
+    public static final double ClimberIgain = 0;
+    public static final double ClimberDgain = 0;
+
+    // pew pew pid https://tinyurl.com/3knr44vv
+    public static final double ShooterPgain = 0.82 * Math.PI * Units.inchesToMeters(4.0)/60.0;
+    public static final double ShooterIgain = 0;
+    public static final double ShooterDgain = 0;
+    public static final double ShooterKs = 0; //TODO determine experimentally
+    public static final double ShooterKv = 0.33 * Math.PI * Units.inchesToMeters(4.0)/60.0;
+
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
@@ -72,6 +84,9 @@ public class Constants {
     public static final int KickerMotorID = 11;
     public static final int AlignmentMotorID = 12;
 
+    // pwm channel
+    public static final int LeftHoodServoID = 0;
+    public static final int RightHoodServoID = 1;
 
      // Kinematics
     public static final double WheelBase = Units.inchesToMeters(23.75);
@@ -122,6 +137,10 @@ public class Constants {
         Units.inchesToMeters(469.1),
         Units.inchesToMeters(158.85));
     public static final double kFacingHubTolerance = 10.0;
+
+
+
+
 
     
     

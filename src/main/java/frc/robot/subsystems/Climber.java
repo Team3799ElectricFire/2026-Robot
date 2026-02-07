@@ -13,6 +13,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.LimitSwitchConfig.Behavior;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,7 +23,6 @@ public class Climber extends SubsystemBase {
   private SparkFlex ClimbMotor  = new SparkFlex(Constants.ClimbMotorID, MotorType.kBrushless);
   private SparkClosedLoopController ClimbPID = ClimbMotor.getClosedLoopController();
   private SparkFlexConfig ClimbConfig = new SparkFlexConfig();
-  //TODO Home Switch
 
   /** Creates a new Climber. */
   public Climber() {
@@ -30,9 +31,11 @@ public class Climber extends SubsystemBase {
       .idleMode(IdleMode.kBrake);
     ClimbConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(0, 0, 0)
-      .outputRange(0.0, 0.0); //TODO put actual numbers
-    
+      .pid(Constants.ClimberPgain, Constants.ClimberIgain, Constants.ClimberDgain)
+      .outputRange(-1.0, 1.0);
+    ClimbConfig.limitSwitch
+      .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
+      .reverseLimitSwitchType(Type.kNormallyOpen);
     ClimbMotor.configure(ClimbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
