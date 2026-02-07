@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.VisionConstants;
 
 public class Drivetrain extends SubsystemBase {
   // Swerve modules
@@ -53,8 +54,8 @@ public class Drivetrain extends SubsystemBase {
     Pidgey.getRotation2d(), 
     getModulePositions(),
     new Pose2d(),
-    Constants.kStateStdDevs,
-    Constants.kVisionStdDevs);
+    VisionConstants.kStateStdDevs,
+    VisionConstants.kVisionStdDevs);
 
   public Cameras Cams = new Cameras();
 

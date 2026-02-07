@@ -4,22 +4,25 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.DriveDefault;
-import frc.robot.Commands.DriveIntake;
-import frc.robot.Commands.DriveShooting;
-import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Commands.*;
+import frc.robot.Subsystems.*;
+import frc.robot.Subsystems.Cameras.VisionSample;
 
 public class RobotContainer {
   private CommandXboxController driver = new CommandXboxController(0);
   private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
+  private Cameras cameras = new Cameras();
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
@@ -46,5 +49,19 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
      return autoChooser.getSelected();
+  }
+
+   public void correctOdometry() {
+    List<VisionSample> visionSamples = cameras.flushSamples();
+    cameras.updateSpeeds(drivetrain.getRobotRelativeSpeeds());
+
+    for (var sample : visionSamples) {
+      double thetaStdDev = sample.weight() > 0.9 ? 10.0 : 99999.0;
+      drivetrain.addVisionMeasurement(
+        sample.pose(), 
+        sample.timestamp(), 
+        VecBuilder.fill(0.1 / sample.weight(), 0.1 / sample.weight(), thetaStdDev)
+      );
+    }
   }
 }

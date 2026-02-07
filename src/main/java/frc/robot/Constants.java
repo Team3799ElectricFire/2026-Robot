@@ -4,12 +4,8 @@ import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 
@@ -100,9 +96,6 @@ public class Constants {
         BackRightTranslation,
         BackLeftTranslation);
 
-    public static final Matrix<N3, N1> kStateStdDevs = VecBuilder.fill(0.1,0.1,0.1);
-    public static final Matrix<N3, N1> kVisionStdDevs = VecBuilder.fill(1,1,1);
-
     // Path Planner
     public static final double MassKG = 57;
     public static final double MOI = 6.883;
@@ -137,12 +130,4 @@ public class Constants {
         Units.inchesToMeters(469.1),
         Units.inchesToMeters(158.85));
     public static final double kFacingHubTolerance = 10.0;
-
-
-
-
-
-    
-    
-   
 }
