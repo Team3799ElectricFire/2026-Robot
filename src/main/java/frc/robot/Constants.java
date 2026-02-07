@@ -23,6 +23,15 @@ public class Constants {
     public static final double DrivingDgain = 0;
     public static final double DrivingFFgain = 1.0/565.0;
 
+    // intake pid
+    public static final double IntakePgain = 0;
+    public static final double IntakeIgain = 0;
+    public static final double IntakeDgain = 0;
+    public static final double IntakePositionConversionFactor = 360.0;
+    public static final double IntakePositionOffset = 0;
+    public static final double IntakeForwardSoftLimit = 0;
+    public static final double IntakeReverseSoftLimit = 0;
+
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
@@ -113,6 +122,8 @@ public class Constants {
         Units.inchesToMeters(469.1),
         Units.inchesToMeters(158.85));
     public static final double kFacingHubTolerance = 10.0;
+
+    
     
    
 }
