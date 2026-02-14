@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.LimitSwitchConfig.Behavior;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -33,6 +34,7 @@ public class Climber extends SubsystemBase {
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(Constants.ClimberPgain, Constants.ClimberIgain, Constants.ClimberDgain)
       .outputRange(-1.0, 1.0);
+    ClimbConfig.encoder.positionConversionFactor(Constants.ClimberPositionConversionFactor);
     ClimbConfig.limitSwitch
       .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
       .reverseLimitSwitchType(Type.kNormallyOpen);
@@ -55,6 +57,19 @@ public class Climber extends SubsystemBase {
   }
   public void ClimbToPosition(double Position){
     ClimbPID.setSetpoint(Position, ControlType.kPosition);
+  }
+  public Boolean atPosition(){
+    return ClimbPID.isAtSetpoint();
+  }
+
+  public Command ClimberUpCommand(){
+    return this.startEnd(this::ClimbUp, this::ClimbStop);
+  }
+  public Command CliberDownCommand(){
+    return this.startEnd(this::ClimbDown,this::ClimbStop);
+  }
+  public Command CimberToPositionCommand(double position){
+     return this.startEnd(() -> {this.ClimbToPosition(position);}, this::ClimbStop).until(this::atPosition);
   }
 
 }

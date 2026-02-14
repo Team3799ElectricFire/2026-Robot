@@ -10,25 +10,22 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Conveyor extends SubsystemBase {
   private SparkFlex FloorMotor = new SparkFlex(Constants.FloorMotorID,MotorType.kBrushless);
   private SparkFlex KickerMotor = new SparkFlex(Constants.KickerMotorID, MotorType.kBrushless);
-  private SparkFlex AllignmentMotor = new SparkFlex(Constants.AlignmentMotorID, MotorType.kBrushless);
   private SparkFlexConfig FloorConfig = new SparkFlexConfig();
   private SparkFlexConfig KickerConfig = new SparkFlexConfig();
-  private SparkFlexConfig AllignmentConfig = new SparkFlexConfig();
 
   /** Creates a new Converyor. */
   public Conveyor() {
-   FloorConfig.inverted(false);
-   FloorMotor.configure(FloorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-   KickerConfig.inverted(false);
-   KickerMotor.configure(KickerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-   AllignmentConfig.inverted(false);
-   AllignmentMotor.configure(AllignmentConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    FloorConfig.inverted(false);
+    FloorMotor.configure(FloorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    KickerConfig.inverted(false);
+    KickerMotor.configure(KickerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
@@ -53,13 +50,16 @@ public class Conveyor extends SubsystemBase {
   public void KickerStop(){
     KickerMotor.set(0);
   }
-  public void AllignmentForward(){
-    AllignmentMotor.set(0.5);
-  }
-  public void AllignmentBackward(){
-    AllignmentMotor.set(-0.5);
-  }
-  public void AllignmentStop(){
-    AllignmentMotor.set(0);
+
+  public Command ConveyorMoveCommand(){
+    return this.startEnd(
+      ()->{
+        FloorForward();
+        KickerForward();
+      },
+      ()->{
+        FloorStop();
+        KickerStop();
+      });
   }
 }

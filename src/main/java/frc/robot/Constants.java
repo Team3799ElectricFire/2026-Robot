@@ -27,11 +27,16 @@ public class Constants {
     public static final double IntakePositionOffset = 0;
     public static final double IntakeForwardSoftLimit = 0;
     public static final double IntakeReverseSoftLimit = 0;
+    public static final double IntakeExtendedPosition = 90.0;
+    public static final double IntakeStowedPosition = 0;
 
     // climb pid
     public static final double ClimberPgain = 0;
     public static final double ClimberIgain = 0;
     public static final double ClimberDgain = 0;
+    public static final double ClimberPositionConversionFactor = 2.0; //TODO to confirm  
+    public static final double ClimbUpPosition = 31.75;
+    public static final double ClimbDownPosition = 20.75;
 
     // pew pew pid https://tinyurl.com/3knr44vv
     public static final double ShooterPgain = 0.82 * Math.PI * Units.inchesToMeters(4.0)/60.0;
@@ -39,6 +44,8 @@ public class Constants {
     public static final double ShooterDgain = 0;
     public static final double ShooterKs = 0; //TODO determine experimentally
     public static final double ShooterKv = 0.33 * Math.PI * Units.inchesToMeters(4.0)/60.0;
+    public static final double FlywheelPassSpeed = 200.0;
+    public static final double HoodPassPosition = 0.7;
 
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
@@ -78,18 +85,17 @@ public class Constants {
     public static final int RightFlywheelMotorID = 22;
     public static final int FloorMotorID = 10;
     public static final int KickerMotorID = 11;
-    public static final int AlignmentMotorID = 12;
-
+    
     // pwm channel
     public static final int LeftHoodServoID = 0;
     public static final int RightHoodServoID = 1;
 
      // Kinematics
     public static final double WheelBase = Units.inchesToMeters(23.75);
-    public static final Translation2d FrontRightTranslation = new Translation2d(+WheelBase / 2, -WheelBase / 2);
-    public static final Translation2d FrontLeftTranslation = new Translation2d(+WheelBase / 2, +WheelBase / 2);
-    public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase / 2, -WheelBase / 2);
-    public static final Translation2d BackLeftTranslation = new Translation2d(-WheelBase / 2, +WheelBase / 2);
+    public static final Translation2d FrontRightTranslation = new Translation2d(+WheelBase * 0.5, -WheelBase * 0.5);
+    public static final Translation2d FrontLeftTranslation = new Translation2d(+WheelBase * 0.5, +WheelBase * 0.5);
+    public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase * 0.5, -WheelBase * 0.5);
+    public static final Translation2d BackLeftTranslation = new Translation2d(-WheelBase * 0.5, +WheelBase * 0.5);
     public static SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         FrontRightTranslation,
         FrontLeftTranslation,

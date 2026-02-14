@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.*;
 import frc.robot.Subsystems.*;
@@ -23,6 +24,11 @@ public class RobotContainer {
   private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
   private Cameras cameras = new Cameras();
+  private Climber climber = new Climber();
+  private Conveyor conveyor = new Conveyor();
+  private Intake intake = new Intake();
+  private Shooter shooter = new Shooter();
+  private Hood hood = new Hood();
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
@@ -41,10 +47,34 @@ public class RobotContainer {
     drivetrain.setAlliance(color);
   }
 
+  Command intakingCommand = new ParallelCommandGroup(
+    new DriveIntake(drivetrain,driver::getLeftY,driver::getLeftX),
+    new IntakePickUp(intake)
+  );
+
+  Command hubShootCommand = new ParallelCommandGroup(
+    new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
+    new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
+  );
+
+  Command passShootCommand = new FlywheelSpinPass(shooter, hood);
+
   private void configureBindings() {
     drivetrain.setDefaultCommand(new DriveDefault(drivetrain,driver::getLeftY, driver::getLeftX, driver::getRightX));
-    driver.rightBumper().whileTrue(new DriveIntake(drivetrain,driver::getLeftY,driver::getLeftX));
-    driver.rightTrigger().whileTrue(new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX));
+    
+    driver.rightBumper().whileTrue(intakingCommand);
+    driver.rightTrigger().whileTrue(hubShootCommand);
+    driver.leftTrigger().whileTrue(passShootCommand);
+    driver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    driver.povUp().whileTrue(climber.ClimberUpCommand());
+    driver.povDown().whileTrue(climber.CliberDownCommand());
+    
+    codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    codriver.leftTrigger().whileTrue(passShootCommand);
+    codriver.rightTrigger().whileTrue(hubShootCommand);
+    codriver.rightBumper().whileTrue(intakingCommand);
+    codriver.povUp().whileTrue(climber.ClimberUpCommand());
+    codriver.povDown().whileTrue(climber.ClimberUpCommand());
   }
 
   public Command getAutonomousCommand() {

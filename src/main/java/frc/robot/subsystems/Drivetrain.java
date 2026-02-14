@@ -145,6 +145,10 @@ public class Drivetrain extends SubsystemBase {
     return Constants.kDriveKinematics.toChassisSpeeds(getModuleState());
   }
 
+  public double getHubDistance(){
+    return HubDistance;
+  }
+
   public void driveRobotRelative(ChassisSpeeds speeds) {
     SwerveModuleState[] moduleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds, RotationCenter);
 
