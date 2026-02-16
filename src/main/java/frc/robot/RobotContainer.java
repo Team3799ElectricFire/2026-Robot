@@ -74,7 +74,7 @@ public class RobotContainer {
     codriver.rightTrigger().whileTrue(hubShootCommand);
     codriver.rightBumper().whileTrue(intakingCommand);
     codriver.povUp().whileTrue(climber.ClimberUpCommand());
-    codriver.povDown().whileTrue(climber.ClimberUpCommand());
+    codriver.povDown().whileTrue(climber.CliberDownCommand());
   }
 
   public Command getAutonomousCommand() {

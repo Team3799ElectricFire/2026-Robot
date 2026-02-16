@@ -60,6 +60,7 @@ public class Conveyor extends SubsystemBase {
       ()->{
         FloorStop();
         KickerStop();
-      });
+      }
+    );
   }
 }
