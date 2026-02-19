@@ -19,8 +19,10 @@ import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Climber extends SubsystemBase {
+public class Climber extends SubsystemBase implements Logged {
   private SparkFlex ClimbMotor  = new SparkFlex(Constants.ClimbMotorID, MotorType.kBrushless);
   private SparkClosedLoopController ClimbPID = ClimbMotor.getClosedLoopController();
   private SparkFlexConfig ClimbConfig = new SparkFlexConfig();
@@ -58,8 +60,17 @@ public class Climber extends SubsystemBase {
   public void ClimbToPosition(double Position){
     ClimbPID.setSetpoint(Position, ControlType.kPosition);
   }
+  @Log 
   public Boolean atPosition(){
     return ClimbPID.isAtSetpoint();
+  }
+  @Log
+  public double getPosition(){
+    return ClimbMotor.getEncoder().getPosition();
+  }
+  @Log 
+  public double getSetpoint(){
+    return ClimbPID.getSetpoint();
   }
 
   public Command ClimberUpCommand(){

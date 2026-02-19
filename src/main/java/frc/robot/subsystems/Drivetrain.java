@@ -26,8 +26,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.VisionConstants;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Drivetrain extends SubsystemBase {
+public class Drivetrain extends SubsystemBase implements Logged {
   // Swerve modules
   private SwerveModule FrontRightModule = new SwerveModule(
       Constants.FrontRightDriveMotorID,
@@ -64,8 +66,11 @@ public class Drivetrain extends SubsystemBase {
   private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
   
   private Alliance OurAlliance = Alliance.Red;
+  @Log 
   private Rotation2d HubAngle = Rotation2d.kZero;
+  @Log
   private boolean FacingHub = false;
+  @Log
   private double HubDistance = 0.0;
 
   /** Creates a new Drivetrain. */
@@ -119,6 +124,7 @@ public class Drivetrain extends SubsystemBase {
   public Rotation2d getHubAngle(){
     return this.HubAngle; 
   }
+  @Log
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
@@ -211,7 +217,7 @@ public class Drivetrain extends SubsystemBase {
     BackRightModule.stop();
     BackLeftModule.stop();
   }
-
+  @Log 
   public SwerveModuleState[] getModuleState() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     states[0] = FrontRightModule.getState();

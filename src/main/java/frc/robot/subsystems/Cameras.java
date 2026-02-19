@@ -18,13 +18,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.VisionConstants;
 import frc.robot.VisionConstants.CameraConfig;
 import frc.robot.VisionConstants.Filtering;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Cameras extends SubsystemBase {
+public class Cameras extends SubsystemBase implements Logged {
   private final PoseEstCamera[] cameras;
 
   private final HashSet<Integer> seenTags = new HashSet<>();
   private final ChassisSpeeds speeds = new ChassisSpeeds();
   private final ArrayList<VisionSample> samples = new ArrayList<>();
+  @Log
+  private Pose2d[] tagLoc;
 
   public record VisionSample(Pose2d pose, double timestamp, double weight) implements StructSerializable {
     private static final VisionSample kEmpty = new VisionSample(Pose2d.kZero, 0.0, 1.0);
@@ -101,7 +105,7 @@ public class Cameras extends SubsystemBase {
       
       seenTags.addAll(camera.getSeenTags());
       
-      Pose2d[] tagLoc = seenTags.stream()
+      tagLoc = seenTags.stream()
         .map(i -> VisionConstants.FieldLayout.getTagPose(i))
         .filter(Optional::isPresent)
         .map(Optional::get)

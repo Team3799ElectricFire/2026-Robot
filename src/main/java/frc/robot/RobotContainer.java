@@ -18,12 +18,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.*;
 import frc.robot.Subsystems.*;
 import frc.robot.Subsystems.Cameras.VisionSample;
+import monologue.Logged;
 
-public class RobotContainer {
+public class RobotContainer implements Logged {
   private CommandXboxController driver = new CommandXboxController(0);
   private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
-  private Cameras cameras = new Cameras();
+  private Cameras cameras = new Cameras(); // TODO initialized from cameraConfig list
   private Climber climber = new Climber();
   private Conveyor conveyor = new Conveyor();
   private Intake intake = new Intake();

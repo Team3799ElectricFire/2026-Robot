@@ -20,13 +20,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.VisionConstants;
 import frc.robot.VisionConstants.Filtering;
+import monologue.Logged;
+import monologue.Annotations.Log;
 import frc.robot.Subsystems.Cameras.VisionSample;
 
-public class PoseEstCamera {
+public class PoseEstCamera implements Logged {
     private PhotonCamera Camera;
     private PhotonPoseEstimator PoseEstimator;
     private final double trustScalar;
@@ -188,12 +189,10 @@ public class PoseEstCamera {
                     }
                 }
             }
-
-            SmartDashboard.putBoolean("/Vision/" + getName() + "/isConnected", Camera.isConnected());//TODO replace smartdashboard w/ logged
         }
     }
 
-    // @Logged
+    @Log
     public boolean isConnected(){
         return Camera.isConnected();
     }

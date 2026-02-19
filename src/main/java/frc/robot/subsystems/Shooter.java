@@ -15,8 +15,10 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends SubsystemBase implements Logged {
   private SparkFlex LeftFlywheelMotor = new SparkFlex(Constants.LeftFlywheelMotorID, MotorType.kBrushless);
   private SparkFlex RightFlywheelMotor = new SparkFlex(Constants.RightFlywheelMotorID, MotorType.kBrushless);
   private SparkFlexConfig RightFlywheelConfig = new SparkFlexConfig();
@@ -56,7 +58,16 @@ public class Shooter extends SubsystemBase {
   public void FlywheelToSpeed(double Speed){
     FlywheelPID.setSetpoint(Speed, ControlType.kVelocity);
   }
+  @Log
   public boolean IsSpeed(){
     return FlywheelPID.isAtSetpoint();
+  }
+  @Log 
+  public double getSpeed(){
+    return LeftFlywheelMotor.getEncoder().getVelocity();
+  }
+  @Log 
+  public double getTargetSpeed(){
+    return FlywheelPID.getSetpoint();
   }
 }

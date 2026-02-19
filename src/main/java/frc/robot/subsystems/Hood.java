@@ -19,15 +19,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Hood extends SubsystemBase {
+public class Hood extends SubsystemBase implements Logged {
   private final Servo leftServo, rightServo;
   private static final Distance kServoLength = Millimeters.of(100);
   private static final LinearVelocity kMaxServoSpeed = Millimeters.of(20).per(Second);
   private static final double kMinPosition = 0.01;
   private static final double kMaxPosition = 0.77;
   private static final double kPositionTolerance = 0.01;
+  @Log
   private double currentPosition = 0.5;
+  @Log
   private double targetPosition = 0.5;
   private Time lastUpdateTime = Seconds.of(0.0);
 
@@ -52,6 +56,7 @@ public class Hood extends SubsystemBase {
     return runOnce(()-> setPosition(position))
     .andThen(Commands.waitUntil(this::isPositionWhithinTolerance));
     }
+  @Log
   public boolean isPositionWhithinTolerance(){
     return MathUtil.isNear(targetPosition, currentPosition, kPositionTolerance);
   }

@@ -14,8 +14,10 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Intake extends SubsystemBase {
+public class Intake extends SubsystemBase implements Logged {
   private SparkMax ExtensionMotor = new SparkMax(Constants.IntakeExtensionMotorID, MotorType.kBrushless);
   private SparkMax SpinningMotor = new SparkMax(Constants. IntakeSpinningMotorID, MotorType.kBrushless);
   private SparkMaxConfig ExtensionConfig = new SparkMaxConfig();
@@ -69,9 +71,11 @@ public class Intake extends SubsystemBase {
   public void ExtensionToPosition(double position){
     ExtensionPID.setSetpoint(position, ControlType.kPosition);
   }
+  @Log
   public boolean IsStowed() {
     return ExtensionMotor.getReverseSoftLimit().isReached();
   }
+  @Log
   public boolean IsExtended(){
     return ExtensionMotor.getForwardSoftLimit().isReached();
   }
