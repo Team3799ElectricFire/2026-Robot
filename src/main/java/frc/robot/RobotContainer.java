@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -24,7 +25,7 @@ public class RobotContainer implements Logged {
   private CommandXboxController driver = new CommandXboxController(0);
   private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
-  private Cameras cameras = new Cameras(); // TODO initialized from cameraConfig list
+  private Cameras cameras = new Cameras(Cameras.camerasFromConfigs(VisionConstants.CONFIGS));
   private Climber climber = new Climber();
   private Conveyor conveyor = new Conveyor();
   private Intake intake = new Intake();
@@ -33,8 +34,12 @@ public class RobotContainer implements Logged {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
-    // TODO Named commands for pathplanner 
-    // 
+    // Named commands for pathplanner 
+    NamedCommands.registerCommand("ClimberUp", climber.ClimberUpCommand());
+    NamedCommands.registerCommand("CliberDown", climber.CliberDownCommand());
+    NamedCommands.registerCommand("ConveyorMove", conveyor.ConveyorMoveCommand());
+    NamedCommands.registerCommand("IntakePickUp", new IntakePickUp(intake));
+    NamedCommands.registerCommand("hubShootCommand", new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance));
 
     configureBindings();
     
@@ -44,7 +49,6 @@ public class RobotContainer implements Logged {
   }
 
   public void setAlliance(Alliance color) {
-    //Cams.setAlliance(color);
     drivetrain.setAlliance(color);
   }
 

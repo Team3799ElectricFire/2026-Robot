@@ -23,15 +23,37 @@ public class VisionConstants {
 
     public static final CameraConfig[] CONFIGS = {
         new CameraConfig(
-            "FrontCamera",
+            "FrontRightCamera",
             1.0,
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(0.0), //TODO Get Camera Position From Ryan
-                    Units.inchesToMeters(0.0),
-                    Units.inchesToMeters(0.0)
+                    Units.inchesToMeters(-11.74),
+                    Units.inchesToMeters(-6.83),
+                    Units.inchesToMeters(21.0)
                 ),
-                new Rotation3d(0,Units.degreesToRadians(-47.0/2.0),0)
+                new Rotation3d(
+                    0,
+                    Units.degreesToRadians(-24.0),
+                    Units.degreesToRadians(-20.0)
+                )
+            ),
+            1280, 
+            800
+        ),
+        new CameraConfig(
+            "FrontLeftCamera",
+            1.0,
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(-11.74),
+                    Units.inchesToMeters(6.83),
+                    Units.inchesToMeters(21.0)
+                ),
+                new Rotation3d(
+                    0,
+                    Units.degreesToRadians(-24.0),
+                    Units.degreesToRadians(20.0)
+                )
             ),
             1280, 
             800
@@ -41,11 +63,15 @@ public class VisionConstants {
             1.0,
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(0.0), //TODO Get Camera Position From Ryan
-                    Units.inchesToMeters(0.0),
-                    Units.inchesToMeters(0.0)
+                    Units.inchesToMeters(-11.17), 
+                    Units.inchesToMeters(-11.17),
+                    Units.inchesToMeters(8.33)
                 ),
-                new Rotation3d(0,Units.degreesToRadians(-47.0/2.0),Units.degreesToRadians(-135))
+                new Rotation3d(
+                    0,
+                    Units.degreesToRadians(-24.0),
+                    Units.degreesToRadians(-135)
+                )
             ),
             1280, 
             800
@@ -55,11 +81,15 @@ public class VisionConstants {
             1.0,
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(0.0), //TODO Get Camera Position From Ryan
-                    Units.inchesToMeters(0.0),
-                    Units.inchesToMeters(0.0)
+                    Units.inchesToMeters(-11.17), 
+                    Units.inchesToMeters(11.17),
+                    Units.inchesToMeters(8.33)
                 ),
-                new Rotation3d(0,Units.degreesToRadians(-47.0/2.0),Units.degreesToRadians(135))
+                new Rotation3d(
+                    0,
+                    Units.degreesToRadians(-24.0),
+                    Units.degreesToRadians(135)
+                )
             ),
             1280, 
             800
