@@ -39,6 +39,7 @@ public class RobotContainer implements Logged {
     NamedCommands.registerCommand("CliberDown", climber.CliberDownCommand());
     NamedCommands.registerCommand("ConveyorMove", conveyor.ConveyorMoveCommand());
     NamedCommands.registerCommand("IntakePickUp", new IntakePickUp(intake));
+    NamedCommands.registerCommand("StopIntake", intake.spinStopCommand());
     NamedCommands.registerCommand("hubShootCommand", new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance));
 
     configureBindings();

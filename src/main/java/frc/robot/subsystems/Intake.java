@@ -84,6 +84,9 @@ public class Intake extends SubsystemBase implements Logged {
   public Command spinPickupCommand(){
     return this.startEnd(this :: SpinPickUp, this :: SpinStop);
   }
+  public Command spinStopCommand(){
+    return this.runOnce(this :: SpinStop);
+  }
   public Command extendCommand(){
     return this.runOnce(()->{ExtensionToPosition(Constants.IntakeExtendedPosition);});
   }
