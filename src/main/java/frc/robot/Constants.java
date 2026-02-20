@@ -91,7 +91,7 @@ public class Constants {
     public static final int RightHoodServoID = 1;
 
      // Kinematics
-    public static final double WheelBase = Units.inchesToMeters(23.75);
+    public static final double WheelBase = Units.inchesToMeters(21.75);
     public static final Translation2d FrontRightTranslation = new Translation2d(+WheelBase * 0.5, -WheelBase * 0.5);
     public static final Translation2d FrontLeftTranslation = new Translation2d(+WheelBase * 0.5, +WheelBase * 0.5);
     public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase * 0.5, -WheelBase * 0.5);

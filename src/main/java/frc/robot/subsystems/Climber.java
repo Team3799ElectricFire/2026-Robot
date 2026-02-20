@@ -40,6 +40,9 @@ public class Climber extends SubsystemBase implements Logged {
     ClimbConfig.limitSwitch
       .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
       .reverseLimitSwitchType(Type.kNormallyOpen);
+    ClimbConfig.softLimit
+      .forwardSoftLimitEnabled(true)
+      .forwardSoftLimit(Constants.ClimbUpPosition + 0.5);
     ClimbMotor.configure(ClimbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 

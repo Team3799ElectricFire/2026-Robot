@@ -80,6 +80,10 @@ public class RobotContainer implements Logged {
     codriver.rightBumper().whileTrue(intakingCommand);
     codriver.povUp().whileTrue(climber.ClimberUpCommand());
     codriver.povDown().whileTrue(climber.CliberDownCommand());
+
+    SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
+    SmartDashboard.putData("Extend Intake" , intake.extendCommand());
+    SmartDashboard.putData("Stow Intake" , intake.stowCommand());
   }
 
   public Command getAutonomousCommand() {

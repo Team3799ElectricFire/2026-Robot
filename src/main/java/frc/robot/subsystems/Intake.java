@@ -12,6 +12,8 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import monologue.Logged;
@@ -78,5 +80,14 @@ public class Intake extends SubsystemBase implements Logged {
   @Log
   public boolean IsExtended(){
     return ExtensionMotor.getForwardSoftLimit().isReached();
+  }
+  public Command spinPickupCommand(){
+    return this.startEnd(this :: SpinPickUp, this :: SpinStop);
+  }
+  public Command extendCommand(){
+    return this.runOnce(()->{ExtensionToPosition(Constants.IntakeExtendedPosition);});
+  }
+  public Command stowCommand(){
+    return this.runOnce(()->{ExtensionToPosition(Constants.IntakeStowedPosition);});
   }
 }
