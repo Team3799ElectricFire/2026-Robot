@@ -37,7 +37,7 @@ public class Robot extends TimedRobot implements Logged {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    m_robotContainer.correctOdometry();
+    // m_robotContainer.correctOdometry();
     Monologue.setFileOnly(DriverStation.isFMSAttached());
     Monologue.updateAll();
   }

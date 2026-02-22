@@ -22,7 +22,7 @@ public class Conveyor extends SubsystemBase {
 
   /** Creates a new Converyor. */
   public Conveyor() {
-    FloorConfig.inverted(false);
+    FloorConfig.inverted(true);
     FloorMotor.configure(FloorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     KickerConfig.inverted(false);
     KickerMotor.configure(KickerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -42,10 +42,10 @@ public class Conveyor extends SubsystemBase {
     FloorMotor.set(0);
   }
   public void KickerForward(){
-    KickerMotor.set(0.5);
+    KickerMotor.set(0.75);
   }
   public void KickerBackward(){
-    KickerMotor.set(-0.5);
+    KickerMotor.set(-0.75);
   }
   public void KickerStop(){
     KickerMotor.set(0);

@@ -30,9 +30,9 @@ import monologue.Logged;
 
 public class RobotContainer implements Logged {
   private CommandXboxController driver = new CommandXboxController(0);
-  private CommandXboxController codriver = new CommandXboxController(1);
+  // private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
-  private Cameras cameras = new Cameras(Cameras.camerasFromConfigs(VisionConstants.CONFIGS));
+  // private Cameras cameras = new Cameras(Cameras.camerasFromConfigs(VisionConstants.CONFIGS));
   private Climber climber = new Climber();
   private Conveyor conveyor = new Conveyor();
   private Intake intake = new Intake();
@@ -82,12 +82,12 @@ public class RobotContainer implements Logged {
     driver.povUp().whileTrue(climber.ClimberUpCommand());
     driver.povDown().whileTrue(climber.CliberDownCommand());
     
-    codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
-    codriver.leftTrigger().whileTrue(passShootCommand);
-    codriver.rightTrigger().whileTrue(hubShootCommand);
-    codriver.rightBumper().whileTrue(intakingCommand);
-    codriver.povUp().whileTrue(climber.ClimberUpCommand());
-    codriver.povDown().whileTrue(climber.CliberDownCommand());
+    // codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    // codriver.leftTrigger().whileTrue(passShootCommand);
+    // codriver.rightTrigger().whileTrue(hubShootCommand);
+    // codriver.rightBumper().whileTrue(intakingCommand);
+    // codriver.povUp().whileTrue(climber.ClimberUpCommand());
+    // codriver.povDown().whileTrue(climber.CliberDownCommand());
 
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
     SmartDashboard.putData("Extend Intake" , intake.extendCommand());
@@ -98,17 +98,17 @@ public class RobotContainer implements Logged {
      return autoChooser.getSelected();
   }
 
-   public void correctOdometry() {
-    List<VisionSample> visionSamples = cameras.flushSamples();
-    cameras.updateSpeeds(drivetrain.getRobotRelativeSpeeds());
+  // public void correctOdometry() {
+  //   List<VisionSample> visionSamples = cameras.flushSamples();
+  //   cameras.updateSpeeds(drivetrain.getRobotRelativeSpeeds());
 
-    for (var sample : visionSamples) {
-      double thetaStdDev = sample.weight() > 0.9 ? 10.0 : 99999.0;
-      drivetrain.addVisionMeasurement(
-        sample.pose(), 
-        sample.timestamp(), 
-        VecBuilder.fill(0.1 / sample.weight(), 0.1 / sample.weight(), thetaStdDev)
-      );
-    }
-  }
+  //   for (var sample : visionSamples) {
+  //     double thetaStdDev = sample.weight() > 0.9 ? 10.0 : 99999.0;
+  //     drivetrain.addVisionMeasurement(
+  //       sample.pose(), 
+  //       sample.timestamp(), 
+  //       VecBuilder.fill(0.1 / sample.weight(), 0.1 / sample.weight(), thetaStdDev)
+  //     );
+  //   }
+  // }
 }

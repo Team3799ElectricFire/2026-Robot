@@ -42,7 +42,7 @@ public class Constants {
     public static final double ShooterPgain = 0.82 * Math.PI * Units.inchesToMeters(4.0)/60.0;
     public static final double ShooterIgain = 0;
     public static final double ShooterDgain = 0;
-    public static final double ShooterKs = 0; //TODO determine experimentally
+    public static final double ShooterKs = 0.01; // TODO determine experimentally
     public static final double ShooterKv = 0.33 * Math.PI * Units.inchesToMeters(4.0)/60.0;
     public static final double FlywheelPassSpeed = 200.0;
     public static final double HoodPassPosition = 0.7;
