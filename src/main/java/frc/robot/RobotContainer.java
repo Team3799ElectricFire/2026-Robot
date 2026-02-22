@@ -17,8 +17,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.*;
-import frc.robot.Subsystems.*;
+// import frc.robot.Subsystems.*;
+import frc.robot.Subsystems.Cameras;
 import frc.robot.Subsystems.Cameras.VisionSample;
+import frc.robot.Subsystems.Climber;
+import frc.robot.Subsystems.Conveyor;
+import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Hood;
+import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Shooter;
 import monologue.Logged;
 
 public class RobotContainer implements Logged {

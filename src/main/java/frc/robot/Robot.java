@@ -27,7 +27,7 @@ public class Robot extends TimedRobot implements Logged {
   
   @Override
   public void robotInit() {
-    FollowPathCommand.warmupCommand().schedule();
+    CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
     boolean fileOnly = false;
     boolean lazyLogging = false;

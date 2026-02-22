@@ -11,7 +11,6 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -44,10 +43,9 @@ public class PoseEstCamera implements Logged {
         this.trustScalar = trustScalar;
 
         PoseEstimator = new PhotonPoseEstimator(
-                VisionConstants.FieldLayout,
-                PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                robotToCam);
-        PoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+            VisionConstants.FieldLayout,
+            robotToCam
+        );
 
         this.width = width;
         this.height = height;
@@ -179,7 +177,7 @@ public class PoseEstCamera implements Logged {
             for (var result : results) {
                 if (result.hasTargets()) {
                     result = pruneTags(result);
-                    Optional<EstimatedRobotPose> estRoboPose = PoseEstimator.update(result);
+                    Optional<EstimatedRobotPose> estRoboPose = PoseEstimator.estimateCoprocMultiTagPose(result);
 
                     if (estRoboPose.isPresent()) {
                         Optional<VisionSample> u = update(estRoboPose.get());

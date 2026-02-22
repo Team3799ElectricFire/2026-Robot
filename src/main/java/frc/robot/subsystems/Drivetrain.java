@@ -4,10 +4,9 @@
 
 package frc.robot.Subsystems;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.reduxrobotics.sensors.canandgyro.Canandgyro;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -49,7 +48,7 @@ public class Drivetrain extends SubsystemBase implements Logged {
       Constants.kBackLeftChassisAngularOffset);
 
   // Gyro sensor
-  private Canandgyro Pidgey = new Canandgyro(Constants.PidgeonID);
+  private Pigeon2 Pidgey = new Pigeon2(Constants.PidgeonID);
   
   // Pose Estimator for tracking robot pose
   private SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -58,9 +57,8 @@ public class Drivetrain extends SubsystemBase implements Logged {
     getModulePositions(),
     new Pose2d(),
     VisionConstants.kStateStdDevs,
-    VisionConstants.kVisionStdDevs);
-
-  public Cameras Cams = new Cameras();
+    VisionConstants.kVisionStdDevs
+  );
 
   private Translation2d RotationCenter = new Translation2d();
   private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
@@ -285,11 +283,11 @@ public class Drivetrain extends SubsystemBase implements Logged {
   }
 
   public double getPitch() {
-    return Pidgey.getPitch();
+    return Pidgey.getPitch().getValueAsDouble();
   }
 
   public double getRoll() {
-    return Pidgey.getRoll();
+    return Pidgey.getRoll().getValueAsDouble();
   }
 
   public Command setDriveSpeedCommand(double newSpeed) {
