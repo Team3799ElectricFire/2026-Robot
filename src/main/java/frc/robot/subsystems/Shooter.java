@@ -33,8 +33,8 @@ public class Shooter extends SubsystemBase implements Logged {
     LeftFlywheelConfig.inverted(false);
     LeftFlywheelConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(Constants.ShooterPgain, Constants.ShooterIgain, Constants.ShooterDgain);
-      // .feedForward.kS(Constants.ShooterKs).kV(Constants.ShooterKv); 
+      .pid(Constants.ShooterPgain, Constants.ShooterIgain, Constants.ShooterDgain)
+      .feedForward.kS(Constants.ShooterKs).kV(Constants.ShooterKv); 
     LeftFlywheelConfig.encoder.velocityConversionFactor(1.0);
     LeftFlywheelMotor.configure(LeftFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

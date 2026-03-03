@@ -30,9 +30,9 @@ public class Hood extends SubsystemBase implements Logged {
   private static final double kMaxPosition = 0.77;
   private static final double kPositionTolerance = 0.01;
   @Log
-  private double currentPosition = 0.5;
+  private double currentPosition = 0.0;
   @Log
-  private double targetPosition = 0.5;
+  private double targetPosition = 0.0;
   private Time lastUpdateTime = Seconds.of(0.0);
 
   /** Creates a new Hood. */

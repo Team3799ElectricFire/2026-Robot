@@ -25,6 +25,7 @@ public class Intake extends SubsystemBase implements Logged {
   private SparkMaxConfig ExtensionConfig = new SparkMaxConfig();
   private SparkMaxConfig SpinningConfig = new SparkMaxConfig();
   private SparkClosedLoopController ExtensionPID = ExtensionMotor.getClosedLoopController();
+  private SparkClosedLoopController SpinningPID = SpinningMotor.getClosedLoopController();
 
   /** Creates a new Intake. */
   public Intake() {
@@ -33,7 +34,7 @@ public class Intake extends SubsystemBase implements Logged {
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .pid(Constants.IntakePgain, Constants.IntakeIgain, Constants.IntakeDgain)
       .positionWrappingEnabled(false)
-      .outputRange(-1.0, 1.0);
+      .outputRange(-1*Constants.IntakeExtensionMaxSpeed, Constants.IntakeExtensionMaxSpeed);
     ExtensionConfig.absoluteEncoder
       .positionConversionFactor(Constants.IntakePositionConversionFactor)
       .zeroOffset(Constants.IntakePositionOffset);
@@ -45,6 +46,12 @@ public class Intake extends SubsystemBase implements Logged {
     ExtensionMotor.configure(ExtensionConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     SpinningConfig.inverted(false);
+    SpinningConfig.closedLoop
+      .pid(Constants.IntakeSpinPgain, Constants.IntakeSpinIgain, Constants.IntakeSpinDgain)
+      .positionWrappingEnabled(false)
+      .outputRange(0.0, 1.0);
+    SpinningConfig.encoder
+      .velocityConversionFactor(Constants.IntakeSpinVelocityConversionFactor);
     SpinningMotor.configure(SpinningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -58,14 +65,21 @@ public class Intake extends SubsystemBase implements Logged {
   public void SpinOut(){
     SpinningMotor.set(-0.5);
   }
+  public void SpinAtSpeed(double speed){
+    SpinningPID.setSetpoint(speed, ControlType.kVelocity);
+  }
+  @Log
+  public double getSpinSpeed(){
+    return SpinningMotor.getEncoder().getVelocity();
+  }
   public void SpinStop(){
     SpinningMotor.set(0);
   }
   public void ExtensionOut(){
-    ExtensionMotor.set(0.5);
+    ExtensionMotor.set(0.10);
   }
   public void ExtensionIn(){
-    ExtensionMotor.set(-0.5);
+    ExtensionMotor.set(-0.10);
   }
   public void ExtensionStop(){
     ExtensionMotor.set(0);
@@ -81,16 +95,27 @@ public class Intake extends SubsystemBase implements Logged {
   public boolean IsExtended(){
     return ExtensionMotor.getForwardSoftLimit().isReached();
   }
+  @Log
+  public double getExtensionPosition(){
+    return ExtensionMotor.getAbsoluteEncoder().getPosition();
+  }
+
   public Command spinPickupCommand(){
-    return this.startEnd(this :: SpinPickUp, this :: SpinStop);
+    return this.startEnd(this::SpinPickUp, this::SpinStop);
   }
   public Command spinStopCommand(){
-    return this.runOnce(this :: SpinStop);
+    return this.runOnce(this::SpinStop);
   }
   public Command extendCommand(){
     return this.runOnce(()->{ExtensionToPosition(Constants.IntakeExtendedPosition);});
   }
   public Command stowCommand(){
     return this.runOnce(()->{ExtensionToPosition(Constants.IntakeStowedPosition);});
+  }
+  public Command ExtendOutCommand(){
+    return this.startEnd(this::ExtensionOut, this::ExtensionStop);
+  }
+  public Command ExtendInCommand(){
+    return this.startEnd(this::ExtensionIn, this::ExtensionStop);
   }
 }

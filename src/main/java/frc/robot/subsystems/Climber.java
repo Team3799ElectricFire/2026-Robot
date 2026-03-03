@@ -36,13 +36,16 @@ public class Climber extends SubsystemBase implements Logged {
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(Constants.ClimberPgain, Constants.ClimberIgain, Constants.ClimberDgain)
       .outputRange(-1.0, 1.0);
-    ClimbConfig.encoder.positionConversionFactor(Constants.ClimberPositionConversionFactor);
+    ClimbConfig.encoder
+      .positionConversionFactor(Constants.ClimberPositionConversionFactor);
     ClimbConfig.limitSwitch
-      .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotor)
-      .reverseLimitSwitchType(Type.kNormallyOpen);
+      .reverseLimitSwitchTriggerBehavior(Behavior.kStopMovingMotorAndSetPosition)
+      .reverseLimitSwitchPosition(Constants.ClimbDownPosition)
+      .reverseLimitSwitchType(Type.kNormallyOpen)
+      .limitSwitchPositionSensor(FeedbackSensor.kPrimaryEncoder);
     ClimbConfig.softLimit
       .forwardSoftLimitEnabled(true)
-      .forwardSoftLimit(Constants.ClimbUpPosition + 0.5);
+      .forwardSoftLimit(Constants.ClimbUpPosition + 0.1);
     ClimbMotor.configure(ClimbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -74,6 +77,10 @@ public class Climber extends SubsystemBase implements Logged {
   @Log 
   public double getSetpoint(){
     return ClimbPID.getSetpoint();
+  }
+  @Log
+  public boolean AtBottom() {
+    return ClimbMotor.getReverseLimitSwitch().isPressed();
   }
 
   public Command ClimberUpCommand(){

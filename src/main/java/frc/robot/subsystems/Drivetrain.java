@@ -95,6 +95,8 @@ public class Drivetrain extends SubsystemBase implements Logged {
         return false;
       },
       this);
+
+    resetEncoders();
   }
 
   @Override
@@ -163,7 +165,6 @@ public class Drivetrain extends SubsystemBase implements Logged {
     FrontLeftModule.setDesiredState(moduleStates[1]);
     BackRightModule.setDesiredState(moduleStates[2]);
     BackLeftModule.setDesiredState(moduleStates[3]);
-
   }
 
   public void driveRobotRelative(double xSpeed, double ySpeed, double rot) {

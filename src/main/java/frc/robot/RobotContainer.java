@@ -92,6 +92,9 @@ public class RobotContainer implements Logged {
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
     SmartDashboard.putData("Extend Intake" , intake.extendCommand());
     SmartDashboard.putData("Stow Intake" , intake.stowCommand());
+    SmartDashboard.putData("Test Flywheel" , new FlywheelTest(shooter, hood));
+    SmartDashboard.putData("Extend Climber", climber.CimberToPositionCommand(Constants.ClimbUpPosition));
+    SmartDashboard.putData("Retract Clikmber", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
   }
 
   public Command getAutonomousCommand() {

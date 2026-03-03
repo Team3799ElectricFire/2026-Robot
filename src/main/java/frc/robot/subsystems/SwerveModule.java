@@ -1,8 +1,8 @@
 package frc.robot.Subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.SparkAnalogSensor;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -15,15 +15,18 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
 public class SwerveModule {
     private SparkFlex SteerMotor, DriveMotor;
     private SparkFlexConfig SteerConfig, DriveConfig;
-    private AbsoluteEncoder SteerEncoder;
+    private RelativeEncoder SteerEncoder;
+    private SparkAnalogSensor SteerAnalogSensor;
     private RelativeEncoder DriveEncoder;
     private SparkClosedLoopController DrivePID, SteerPID;
     private SwerveModuleState DesiredState = new SwerveModuleState(0.0, new Rotation2d());
+    private double SteerOffset = 0;
 
     public SwerveModule(int driveMotorID, int steerMotorID, double steerOffset) {
         // Motors
@@ -31,7 +34,8 @@ public class SwerveModule {
         DriveMotor = new SparkFlex(driveMotorID, MotorType.kBrushless);
 
         // encoders
-        SteerEncoder = SteerMotor.getAbsoluteEncoder();
+        SteerEncoder = SteerMotor.getEncoder();
+        SteerAnalogSensor = SteerMotor.getAnalog();
         DriveEncoder = DriveMotor.getEncoder();
 
         // PIDs
@@ -42,41 +46,41 @@ public class SwerveModule {
         SteerConfig = new SparkFlexConfig();
         SteerConfig.inverted(true);
         SteerConfig.closedLoop
-                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-                // Set PID values for position control. We don't need to pass a closed loop
-                // slot, as it will default to slot 0.
-                .p(Constants.SteeringPgain)
-                .i(Constants.SteeringIgain)
-                .d(Constants.SteeringDgain)
-                .positionWrappingEnabled(true)
-                .positionWrappingInputRange(0, 2 * Math.PI)
-                .outputRange(-1, 1);
-        SteerConfig.absoluteEncoder
-                .positionConversionFactor(Constants.SteerMotorPositionFactor)
-                .zeroOffset(steerOffset);
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            // Set PID values for position control. We don't need to pass a closed loop
+            // slot, as it will default to slot 0.
+            .p(Constants.SteeringPgain)
+            .i(Constants.SteeringIgain)
+            .d(Constants.SteeringDgain)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, 2 * Math.PI)
+            .outputRange(-1, 1);
+        SteerConfig.encoder
+            .positionConversionFactor(Constants.SteerMotorPositionFactor);
         SteerMotor.configure(SteerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        this.SteerOffset = steerOffset;
 
         DriveConfig = new SparkFlexConfig();
         DriveConfig
-                .inverted(true)
-                .idleMode(IdleMode.kBrake);
+            .inverted(true)
+            .idleMode(IdleMode.kBrake);
         DriveConfig.encoder
-                .positionConversionFactor(Constants.DriveMotorPositionFactor)
-                .velocityConversionFactor(Constants.DriveMotorVelocityFactor);
+            .positionConversionFactor(Constants.DriveMotorPositionFactor)
+            .velocityConversionFactor(Constants.DriveMotorVelocityFactor);
         DriveConfig.closedLoop
-                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .p(Constants.DrivingPgain)
-                .i(Constants.DrivingIgain)
-                .d(Constants.DrivingDgain)
-                .outputRange(-1, 1)
-                .feedForward.kV(Constants.DrivingFFgain);
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .p(Constants.DrivingPgain)
+            .i(Constants.DrivingIgain)
+            .d(Constants.DrivingDgain)
+            .outputRange(-1, 1)
+            .feedForward.kV(Constants.DrivingFFgain);
         DriveMotor.configure(DriveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
                 DriveEncoder.getVelocity(),
-                new Rotation2d(SteerEncoder.getPosition()));
+                new Rotation2d(getWrappedPosition()));
     }
 
     public SwerveModuleState getDesiredPosition() {
@@ -86,13 +90,13 @@ public class SwerveModule {
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
                 DriveEncoder.getPosition(),
-                new Rotation2d(SteerEncoder.getPosition()));
+                new Rotation2d(getWrappedPosition()));
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize desired state based on current angle (never rotate module more than
         // 90degrees)
-        desiredState.optimize(new Rotation2d(SteerEncoder.getPosition()));
+        desiredState.optimize(new Rotation2d(getWrappedPosition()));
 
         // Always set the driving motor's speed
         DrivePID.setSetpoint(desiredState.speedMetersPerSecond, ControlType.kVelocity);
@@ -109,7 +113,7 @@ public class SwerveModule {
     public void setDesiredStateNoRestrictions(SwerveModuleState desiredState) {
         // Optimize desired state based on current angle (never rotate module more than
         // 90degrees)
-        desiredState.optimize(new Rotation2d(SteerEncoder.getPosition()));
+        desiredState.optimize(new Rotation2d(getWrappedPosition()));
 
         // Always set the driving motor's speed
         DrivePID.setSetpoint(desiredState.speedMetersPerSecond, ControlType.kVelocity);
@@ -128,6 +132,20 @@ public class SwerveModule {
 
     public void resetEncoders() {
         DriveEncoder.setPosition(0);
+        SteerEncoder.setPosition(getVirtualSteerPosition());
     }
 
+    public double getVirtualSteerPosition(){
+        double voltage = SteerAnalogSensor.getVoltage();
+        double busVoltage = RobotController.getVoltage5V();
+
+        double analogPosition = (voltage / busVoltage) * (Math.PI * 2);
+
+        return analogPosition - SteerOffset;
+    }
+
+    public double getWrappedPosition(){
+        double angle = SteerEncoder.getPosition();
+        return angle - (2 * Math.PI) * Math.floor(angle / (2 * Math.PI));
+    }
 }

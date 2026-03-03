@@ -20,46 +20,51 @@ public class Constants {
     public static final double DrivingFFgain = 1.0/565.0;
 
     // intake pid
-    public static final double IntakePgain = 0;
+    public static final double IntakePgain = 0.007;
     public static final double IntakeIgain = 0;
     public static final double IntakeDgain = 0;
     public static final double IntakePositionConversionFactor = 360.0;
-    public static final double IntakePositionOffset = 0;
-    public static final double IntakeForwardSoftLimit = 0;
-    public static final double IntakeReverseSoftLimit = 0;
-    public static final double IntakeExtendedPosition = 90.0;
-    public static final double IntakeStowedPosition = 0;
+    public static final double IntakePositionOffset = 187.8/360.0;
+    public static final double IntakeForwardSoftLimit = 160.0;
+    public static final double IntakeReverseSoftLimit = 88.0;
+    public static final double IntakeExtendedPosition = 158.8;
+    public static final double IntakeStowedPosition = 89.0;
+    public static final double IntakeExtensionMaxSpeed = 0.25;
+    public static final double IntakeSpinPgain = 0;
+    public static final double IntakeSpinIgain = 0;
+    public static final double IntakeSpinDgain = 0;
+    public static final double IntakeSpinVelocityConversionFactor = (1.0/3.0)*(15.0/20.0)*Math.PI*Units.inchesToMeters(1.285)/60.0;
 
     // climb pid
-    public static final double ClimberPgain = 0;
+    public static final double ClimberPgain = 1.25;
     public static final double ClimberIgain = 0;
-    public static final double ClimberDgain = 0;
-    public static final double ClimberPositionConversionFactor = 2.0; //TODO to confirm  
-    public static final double ClimbUpPosition = 31.75;
-    public static final double ClimbDownPosition = 20.75;
+    public static final double ClimberDgain = 0.001;
+    public static final double ClimberPositionConversionFactor = (1.0/44.1);
+    public static final double ClimbUpPosition = 3.85;
+    public static final double ClimbDownPosition = 0.0;
 
-    // pew pew pid https://tinyurl.com/3knr44vv
-    public static final double ShooterPgain = 0.82 * Math.PI * Units.inchesToMeters(4.0)/60.0;
-    public static final double ShooterIgain = 0;
-    public static final double ShooterDgain = 0;
-    public static final double ShooterKs = 0.01; // TODO determine experimentally
-    public static final double ShooterKv = 0.33 * Math.PI * Units.inchesToMeters(4.0)/60.0;
+    // pew pew pid
+    public static final double ShooterPgain = 0.0007;
+    public static final double ShooterIgain = 0.0;
+    public static final double ShooterDgain = 0.0;
+    public static final double ShooterKs = 0.24;
+    public static final double ShooterKv = 0.0022;
     public static final double FlywheelPassSpeed = 200.0;
     public static final double HoodPassPosition = 0.7;
 
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
-    public static final double SteerMotorPositionFactor = 2 * Math.PI; // radians
+    public static final double SteerMotorPositionFactor = (2 * Math.PI) / (150.0 / 7.0); // radians per rotation
 
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
     public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(19.3);
     public static final double kMaxAngularSpeed = Units.degreesToRadians(360);
-    public static final double kFrontRightChassisAngularOffset = 0.7922185; // CAN ID 7
-    public static final double kFrontLeftChassisAngularOffset = 0.2272288; // CAN ID 1
-    public static final double kBackRightChassisAngularOffset = 0.4184715; // CAN ID 5
-    public static final double kBackLeftChassisAngularOffset = 0.0312085;  // CAN ID 3
+    public static final double kFrontRightChassisAngularOffset = Units.degreesToRadians(180.33); // CAN ID 7
+    public static final double kFrontLeftChassisAngularOffset = Units.degreesToRadians(98.98); // CAN ID 1
+    public static final double kBackRightChassisAngularOffset = Units.degreesToRadians(274.12); // CAN ID 5
+    public static final double kBackLeftChassisAngularOffset = Units.degreesToRadians(1.71);  // CAN ID 3
     
     // driving 
     public static final double panRateOfChangeLimit = 10.0;
