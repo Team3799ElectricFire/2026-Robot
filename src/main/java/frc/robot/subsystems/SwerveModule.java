@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -44,7 +45,9 @@ public class SwerveModule {
 
         // Motor Configuration
         SteerConfig = new SparkFlexConfig();
-        SteerConfig.inverted(true);
+        SteerConfig
+            .inverted(true)
+            .idleMode(IdleMode.kBrake);
         SteerConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             // Set PID values for position control. We don't need to pass a closed loop
@@ -144,6 +147,12 @@ public class SwerveModule {
         return analogPosition - SteerOffset;
     }
 
+    @Logged
+    public double getAnalogVoltage(){
+        return SteerAnalogSensor.getVoltage();
+    }
+
+    @Logged
     public double getWrappedPosition(){
         double angle = SteerEncoder.getPosition();
         return angle - (2 * Math.PI) * Math.floor(angle / (2 * Math.PI));

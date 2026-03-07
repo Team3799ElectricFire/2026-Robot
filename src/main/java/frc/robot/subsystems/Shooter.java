@@ -13,12 +13,12 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
+import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import monologue.Logged;
-import monologue.Annotations.Log;
 
-public class Shooter extends SubsystemBase implements Logged {
+public class Shooter extends SubsystemBase {
   private SparkFlex LeftFlywheelMotor = new SparkFlex(Constants.LeftFlywheelMotorID, MotorType.kBrushless);
   private SparkFlex RightFlywheelMotor = new SparkFlex(Constants.RightFlywheelMotorID, MotorType.kBrushless);
   private SparkFlexConfig RightFlywheelConfig = new SparkFlexConfig();
@@ -58,16 +58,24 @@ public class Shooter extends SubsystemBase implements Logged {
   public void FlywheelToSpeed(double Speed){
     FlywheelPID.setSetpoint(Speed, ControlType.kVelocity);
   }
-  @Log
+  @Logged
   public boolean IsSpeed(){
     return FlywheelPID.isAtSetpoint();
   }
-  @Log 
+  @Logged 
   public double getSpeed(){
     return LeftFlywheelMotor.getEncoder().getVelocity();
   }
-  @Log 
+  @Logged
   public double getTargetSpeed(){
     return FlywheelPID.getSetpoint();
+  }
+  public Command FlywheelToSpeedCommand(double speedRpm){
+    return this.startEnd(
+      () -> {
+        FlywheelToSpeed(speedRpm);
+      },
+      this::FlywheelStop
+    );
   }
 }

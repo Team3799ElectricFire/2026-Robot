@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,16 +19,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.VisionConstants;
 import frc.robot.VisionConstants.CameraConfig;
 import frc.robot.VisionConstants.Filtering;
-import monologue.Logged;
-import monologue.Annotations.Log;
 
-public class Cameras extends SubsystemBase implements Logged {
+public class Cameras extends SubsystemBase {
   private final PoseEstCamera[] cameras;
 
   private final HashSet<Integer> seenTags = new HashSet<>();
   private final ChassisSpeeds speeds = new ChassisSpeeds();
   private final ArrayList<VisionSample> samples = new ArrayList<>();
-  @Log
+  @Logged
   private Pose2d[] tagLoc;
 
   public record VisionSample(Pose2d pose, double timestamp, double weight) implements StructSerializable {

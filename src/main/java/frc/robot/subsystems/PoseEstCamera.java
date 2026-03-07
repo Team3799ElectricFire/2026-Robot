@@ -15,6 +15,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -22,11 +23,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Robot;
 import frc.robot.VisionConstants;
 import frc.robot.VisionConstants.Filtering;
-import monologue.Logged;
-import monologue.Annotations.Log;
 import frc.robot.Subsystems.Cameras.VisionSample;
 
-public class PoseEstCamera implements Logged {
+public class PoseEstCamera {
     private PhotonCamera Camera;
     private PhotonPoseEstimator PoseEstimator;
     private final double trustScalar;
@@ -190,7 +189,7 @@ public class PoseEstCamera implements Logged {
         }
     }
 
-    @Log
+    @Logged
     public boolean isConnected(){
         return Camera.isConnected();
     }

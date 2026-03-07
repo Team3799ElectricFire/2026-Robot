@@ -7,6 +7,8 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -25,27 +27,29 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.VisionConstants;
-import monologue.Logged;
-import monologue.Annotations.Log;
 
-public class Drivetrain extends SubsystemBase implements Logged {
+public class Drivetrain extends SubsystemBase{
   // Swerve modules
+  @Logged
   private SwerveModule FrontRightModule = new SwerveModule(
-      Constants.FrontRightDriveMotorID,
-      Constants.FrontRightSteerMotorID,
-      Constants.kFrontRightChassisAngularOffset);
+    Constants.FrontRightDriveMotorID,
+    Constants.FrontRightSteerMotorID,
+    Constants.kFrontRightChassisAngularOffset);
+  @Logged
   private SwerveModule FrontLeftModule = new SwerveModule(
-      Constants.FrontLeftDriveMotorID,
-      Constants.FrontLeftSteerMotorID,
-      Constants.kFrontLeftChassisAngularOffset);
+    Constants.FrontLeftDriveMotorID,
+    Constants.FrontLeftSteerMotorID,
+    Constants.kFrontLeftChassisAngularOffset);
+  @Logged
   private SwerveModule BackRightModule = new SwerveModule(
-      Constants.BackRightDriveMotorID,
-      Constants.BackRightSteerMotorID,
-      Constants.kBackRightChassisAngularOffset);
+    Constants.BackRightDriveMotorID,
+    Constants.BackRightSteerMotorID,
+    Constants.kBackRightChassisAngularOffset);
+  @Logged
   private SwerveModule BackLeftModule = new SwerveModule(
-      Constants.BackLeftDriveMotorID,
-      Constants.BackLeftSteerMotorID,
-      Constants.kBackLeftChassisAngularOffset);
+    Constants.BackLeftDriveMotorID,
+    Constants.BackLeftSteerMotorID,
+    Constants.kBackLeftChassisAngularOffset);
 
   // Gyro sensor
   private Pigeon2 Pidgey = new Pigeon2(Constants.PidgeonID);
@@ -64,11 +68,11 @@ public class Drivetrain extends SubsystemBase implements Logged {
   private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
   
   private Alliance OurAlliance = Alliance.Red;
-  @Log 
+  @Logged 
   private Rotation2d HubAngle = Rotation2d.kZero;
-  @Log
+  @Logged
   private boolean FacingHub = false;
-  @Log
+  @Logged
   private double HubDistance = 0.0;
 
   /** Creates a new Drivetrain. */
@@ -124,7 +128,7 @@ public class Drivetrain extends SubsystemBase implements Logged {
   public Rotation2d getHubAngle(){
     return this.HubAngle; 
   }
-  @Log
+  @Logged
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
@@ -216,7 +220,7 @@ public class Drivetrain extends SubsystemBase implements Logged {
     BackRightModule.stop();
     BackLeftModule.stop();
   }
-  @Log 
+  @Logged
   public SwerveModuleState[] getModuleState() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     states[0] = FrontRightModule.getState();
@@ -276,11 +280,12 @@ public class Drivetrain extends SubsystemBase implements Logged {
   public Command ZeroHeadingCommand(){
     return runOnce(() -> {
       zeroHeading();
-    }).asProxy();
+    }).ignoringDisable(true);
   }
   
+  @Logged
   public double getHeading() {
-    return Pidgey.getRotation2d().getDegrees();
+    return Pidgey.getRotation2d().getRadians();
   }
 
   public double getPitch() {

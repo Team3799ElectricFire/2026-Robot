@@ -6,40 +6,44 @@ package frc.robot;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import monologue.Logged;
-import monologue.Monologue;
+import edu.wpi.first.epilogue.Epilogue;
+import edu.wpi.first.epilogue.Logged;
 
-public class Robot extends TimedRobot implements Logged {
+@Logged
+public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+
+    SignalLogger.enableAutoLogging(false);
+
+    DataLogManager.start();
+    Epilogue.bind(this);
   }
   
   @Override
   public void robotInit() {
     CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
-    boolean fileOnly = false;
-    boolean lazyLogging = false;
-    Monologue.setupMonologue(this, "Robot", fileOnly, lazyLogging);
+    
   }
   
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    // m_robotContainer.correctOdometry();
-    Monologue.setFileOnly(DriverStation.isFMSAttached());
-    Monologue.updateAll();
+    m_robotContainer.correctOdometry();
   }
 
   @Override
@@ -49,7 +53,9 @@ public class Robot extends TimedRobot implements Logged {
   public void disabledPeriodic() {}
 
   @Override
-  public void disabledExit() {}
+  public void disabledExit() {
+    m_robotContainer.resetEncoders();
+  }
 
   @Override
   public void autonomousInit() {

@@ -23,7 +23,7 @@ public class VisionConstants {
 
     public static final CameraConfig[] CONFIGS = {
         new CameraConfig(
-            "FrontRightCamera",
+            "FrontRightCam",
             1.0,
             new Transform3d(
                 new Translation3d(
@@ -41,7 +41,7 @@ public class VisionConstants {
             800
         ),
         new CameraConfig(
-            "FrontLeftCamera",
+            "FrontLeftCam",
             1.0,
             new Transform3d(
                 new Translation3d(
@@ -59,7 +59,7 @@ public class VisionConstants {
             800
         ),
         new CameraConfig(
-            "BackRightCamera",
+            "BackRightCam",
             1.0,
             new Transform3d(
                 new Translation3d(
@@ -77,7 +77,7 @@ public class VisionConstants {
             800
         ),
         new CameraConfig(
-            "BackLeftCamera",
+            "BackLeftCam",
             1.0,
             new Transform3d(
                 new Translation3d(
