@@ -33,7 +33,7 @@ public class Conveyor extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void FloorForward(){
-    FloorMotor.set(0.5);
+    FloorMotor.set(0.80);
   }
   public void FloorBackward(){
     FloorMotor.set(-0.5);

@@ -49,7 +49,7 @@ public class Constants {
     public static final double ShooterDgain = 0.0;
     public static final double ShooterKs = 0.24;
     public static final double ShooterKv = 0.0022;
-    public static final double FlywheelPassSpeed = 200.0;
+    public static final double FlywheelPassSpeed = 2000.0;
     public static final double HoodPassPosition = 0.7;
 
     // Conversion factors

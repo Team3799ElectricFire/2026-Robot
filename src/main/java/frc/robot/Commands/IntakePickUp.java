@@ -33,7 +33,7 @@ public class IntakePickUp extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.ExtensionToPosition(Constants.IntakeStowedPosition);
+    // intake.ExtensionToPosition(Constants.IntakeStowedPosition);
     intake.SpinStop();
   }
 
