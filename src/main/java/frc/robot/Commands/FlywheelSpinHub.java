@@ -59,7 +59,11 @@ public class FlywheelSpinHub extends Command {
     double distInches = Units.metersToInches(Distance);
 
     // return 0.19115 * distInches * distInches - 37.58922 * distInches + 4188.67239;
-    return -0.000316098 * Math.pow(distInches,3) + Math.pow(0.131936,2) - 10.08891 * distInches + 2485.24221;
+    return 
+      -0.000316098 * Math.pow(distInches,3) 
+      + 0.131936 * Math.pow(distInches,2)
+      - 10.08891 * distInches
+      + 2485.24221;
   }
   private double CalcHoodPositionFromDistance(double Distance){
     return 0; // Always zero when shooting at Hub (from testing)
