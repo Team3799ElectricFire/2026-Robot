@@ -67,9 +67,9 @@ public class RobotContainer {
   );
 
   Command hubShootCommand = new ParallelCommandGroup(
-    // new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
-    // new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
-    shooter.FlywheelToSpeedCommand(2600)
+    new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
+    new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
+    // shooter.FlywheelToSpeedCommand(2600)
   );
 
   Command passShootCommand = new FlywheelSpinPass(shooter, hood);

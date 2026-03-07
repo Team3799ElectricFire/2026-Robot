@@ -30,10 +30,11 @@ public class Constants {
     public static final double IntakeExtendedPosition = 158.8;
     public static final double IntakeStowedPosition = 89.0;
     public static final double IntakeExtensionMaxSpeed = 0.25;
-    public static final double IntakeSpinPgain = 0;
+    public static final double IntakeSpinPgain = 0; // TODO tune for velocity mode and change command back
     public static final double IntakeSpinIgain = 0;
     public static final double IntakeSpinDgain = 0;
-    public static final double IntakeSpinVelocityConversionFactor = (1.0/3.0)*(15.0/20.0)*Math.PI*Units.inchesToMeters(1.285)/60.0;
+    public static final double IntakeSpinVelocityConversionFactor = (1.0/3.0) * (15.0/20.0);
+    public static final double IntakeSpeed = 1700.0;
 
     // climb pid
     public static final double ClimberPgain = 1.25;
@@ -48,8 +49,8 @@ public class Constants {
     public static final double ShooterIgain = 0.0;
     public static final double ShooterDgain = 0.0;
     public static final double ShooterKs = 0.24;
-    public static final double ShooterKv = 0.0022;
-    public static final double FlywheelPassSpeed = 2000.0;
+    public static final double ShooterKv = 0.0021054;
+    public static final double FlywheelPassSpeed = 2700.0;
     public static final double HoodPassPosition = 0.7;
 
     // Conversion factors
@@ -70,7 +71,7 @@ public class Constants {
     public static final double panRateOfChangeLimit = 10.0;
     public static final double rotRateOfChangeLimit = 10.0;
     public static final double minThumbstickMagnitude = 0.1;
-    public static final double teleopTurningPgain = 0.1;
+    public static final double teleopTurningPgain = 1.5;
     public static final double teleopTurningDgain = 0.01;
 
     // CanbusID

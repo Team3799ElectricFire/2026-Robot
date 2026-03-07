@@ -23,6 +23,7 @@ public class IntakePickUp extends Command {
   @Override
   public void initialize() {
     intake.ExtensionToPosition(Constants.IntakeExtendedPosition);
+    // intake.SpinAtSpeed(Constants.IntakeSpeed);
     intake.SpinPickUp();
   }
 

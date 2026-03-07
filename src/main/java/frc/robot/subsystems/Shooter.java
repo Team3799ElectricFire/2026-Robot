@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -60,7 +61,12 @@ public class Shooter extends SubsystemBase {
   }
   @Logged
   public boolean IsSpeed(){
-    return FlywheelPID.isAtSetpoint();
+    double setpoint = getTargetSpeed();
+    double current = getSpeed();
+    boolean atSetpoint = MathUtil.isNear(setpoint, current, 100);
+
+    // return FlywheelPID.isAtSetpoint();
+    return atSetpoint;
   }
   @Logged 
   public double getSpeed(){

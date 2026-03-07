@@ -99,6 +99,9 @@ public class Intake extends SubsystemBase{
     return ExtensionMotor.getAbsoluteEncoder().getPosition();
   }
 
+  public Command spinAtSpeedCommand(double speed){
+    return this.startEnd(()->{SpinAtSpeed(speed);}, this::SpinStop);
+  }
   public Command spinPickupCommand(){
     return this.startEnd(this::SpinPickUp, this::SpinStop);
   }
@@ -111,10 +114,10 @@ public class Intake extends SubsystemBase{
   public Command stowCommand(){
     return this.runOnce(()->{ExtensionToPosition(Constants.IntakeStowedPosition);});
   }
-  public Command ExtendOutCommand(){
-    return this.startEnd(this::ExtensionOut, this::ExtensionStop);
-  }
-  public Command ExtendInCommand(){
-    return this.startEnd(this::ExtensionIn, this::ExtensionStop);
-  }
+  // public Command ExtendOutCommand(){
+  //   return this.startEnd(this::ExtensionOut, this::ExtensionStop);
+  // }
+  // public Command ExtendInCommand(){
+  //   return this.startEnd(this::ExtensionIn, this::ExtensionStop);
+  // }
 }

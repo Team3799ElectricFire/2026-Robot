@@ -56,17 +56,11 @@ public class DriveShooting extends Command {
     double yDemand = YLimiter.calculate(YRawDemand * Math.abs(YRawDemand));
     double rotDemand = rotPID.calculate(
       MathUtil.angleModulus(drivetrain.getPose().getRotation().getRadians()),
-      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians()));
+      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians())
+    );
 
-    // Only command the modules to move if the driver input is far enough from
-    // center
-    if (isDriving) {
-      // Drive
-      drivetrain.driveFieldRelative(xDemand, yDemand, rotDemand);
-    } else {
-      // Stop
-      drivetrain.stop();
-    }
+    // Drive
+    drivetrain.driveFieldRelative(xDemand, yDemand, rotDemand);
   }
 
   // Called once the command ends or is interrupted.
