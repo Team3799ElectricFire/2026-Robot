@@ -71,8 +71,8 @@ public class Constants {
     public static final double panRateOfChangeLimit = 10.0;
     public static final double rotRateOfChangeLimit = 10.0;
     public static final double minThumbstickMagnitude = 0.1;
-    public static final double teleopTurningPgain = 1.5;
-    public static final double teleopTurningDgain = 0.01;
+    public static final double teleopTurningPgain = 5.73;
+    public static final double teleopTurningDgain = 0.573;
 
     // CanbusID
     public static final int FrontRightDriveMotorID = 8;
