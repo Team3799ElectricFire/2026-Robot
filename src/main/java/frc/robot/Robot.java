@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     SignalLogger.enableAutoLogging(false);
+    SignalLogger.stop();
 
     DataLogManager.start();
     Epilogue.bind(this);
