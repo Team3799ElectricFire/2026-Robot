@@ -140,7 +140,7 @@ public class Drivetrain extends SubsystemBase{
         pose);
   }
   public Command resetPoseCommand(Pose2d pose) {
-    return this.runOnce(() -> {resetPose(pose);});
+    return this.runOnce(() -> {resetPose(pose);}).ignoringDisable(true);
   }
 
   public void addVisionMeasurement(Pose2d visionRobotPoseMeters,
