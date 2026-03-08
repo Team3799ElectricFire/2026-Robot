@@ -139,6 +139,9 @@ public class Drivetrain extends SubsystemBase{
         getModulePositions(),
         pose);
   }
+  public Command resetPoseCommand(Pose2d pose) {
+    return this.runOnce(() -> {resetPose(pose);});
+  }
 
   public void addVisionMeasurement(Pose2d visionRobotPoseMeters,
       double timestampSeconds,

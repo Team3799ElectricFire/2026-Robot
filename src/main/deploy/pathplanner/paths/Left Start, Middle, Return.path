@@ -78,19 +78,19 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "IntakePickUp",
+      "name": "Run Intake",
       "waypointRelativePos": 1.0868486352357642,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
-      "name": "StopIntake",
+      "name": "Stop Intake",
       "waypointRelativePos": 2.349379652605415,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
-      "name": "hubShootCommand",
+      "name": "Run Flywheel",
       "waypointRelativePos": 3.0,
       "endWaypointRelativePos": null,
       "command": null
@@ -106,7 +106,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -54.566685989714365
+    "rotation": -54.56668598971437
   },
   "reversed": false,
   "folder": null,

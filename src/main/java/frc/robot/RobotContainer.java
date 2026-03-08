@@ -43,12 +43,13 @@ public class RobotContainer {
 
   public RobotContainer() {
     // Named commands for pathplanner 
-    NamedCommands.registerCommand("ClimberUp", climber.ClimberUpCommand());
-    NamedCommands.registerCommand("CliberDown", climber.CliberDownCommand());
-    NamedCommands.registerCommand("ConveyorMove", conveyor.ConveyorMoveCommand());
-    NamedCommands.registerCommand("IntakePickUp", new IntakePickUp(intake));
-    NamedCommands.registerCommand("StopIntake", intake.spinStopCommand());
-    NamedCommands.registerCommand("hubShootCommand", new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance));
+    NamedCommands.registerCommand("Climber Up", climber.CimberToPositionCommand(Constants.ClimbUpPosition));
+    NamedCommands.registerCommand("Cliber Down", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
+    NamedCommands.registerCommand("Shoot", conveyor.ConveyorMoveCommand().withTimeout(5.0));
+    NamedCommands.registerCommand("Run Intake", new IntakePickUp(intake).withTimeout(10.0));
+    NamedCommands.registerCommand("Stop Intake", intake.spinStopCommand());
+    NamedCommands.registerCommand("Run Flywheel", new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance).until(shooter::IsSpeed));
+    NamedCommands.registerCommand("Turn To Hub", new DriveShooting(drivetrain, ()->{return 0;}, ()->{return 0;}));
 
     configureBindings();
     
@@ -99,6 +100,7 @@ public class RobotContainer {
     SmartDashboard.putData("Extend Climber", climber.CimberToPositionCommand(Constants.ClimbUpPosition));
     SmartDashboard.putData("Retract Climber", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
     SmartDashboard.putData("Zero Heading", drivetrain.ZeroHeadingCommand());
+    SmartDashboard.putData("Reset to Starting Position", drivetrain.resetPoseCommand(Constants.StartingPose));
   }
 
   public Command getAutonomousCommand() {

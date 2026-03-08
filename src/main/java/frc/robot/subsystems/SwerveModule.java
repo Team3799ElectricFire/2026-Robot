@@ -47,7 +47,8 @@ public class SwerveModule {
         SteerConfig = new SparkFlexConfig();
         SteerConfig
             .inverted(true)
-            .idleMode(IdleMode.kBrake);
+            .idleMode(IdleMode.kBrake)
+            .smartCurrentLimit(Constants.kSteeringMotorCurrentLimitAmps);
         SteerConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             // Set PID values for position control. We don't need to pass a closed loop
@@ -66,7 +67,8 @@ public class SwerveModule {
         DriveConfig = new SparkFlexConfig();
         DriveConfig
             .inverted(true)
-            .idleMode(IdleMode.kBrake);
+            .idleMode(IdleMode.kBrake)
+            .smartCurrentLimit(Constants.kDriveMotorCurrentLimitAmps);
         DriveConfig.encoder
             .positionConversionFactor(Constants.DriveMotorPositionFactor)
             .velocityConversionFactor(Constants.DriveMotorVelocityFactor);

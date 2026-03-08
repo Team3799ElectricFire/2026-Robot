@@ -4,6 +4,8 @@ import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -66,6 +68,8 @@ public class Constants {
     public static final double kFrontLeftChassisAngularOffset = Units.degreesToRadians(98.98); // CAN ID 1
     public static final double kBackRightChassisAngularOffset = Units.degreesToRadians(274.12); // CAN ID 5
     public static final double kBackLeftChassisAngularOffset = Units.degreesToRadians(1.71);  // CAN ID 3
+    public static final int kSteeringMotorCurrentLimitAmps = 20;
+    public static final int kDriveMotorCurrentLimitAmps = 40;
     
     // driving 
     public static final double panRateOfChangeLimit = 10.0;
@@ -142,4 +146,11 @@ public class Constants {
         Units.inchesToMeters(469.1),
         Units.inchesToMeters(158.85));
     public static final double kFacingHubTolerance = 10.0;
+    public static final Pose2d StartingPose = new Pose2d(
+        new Translation2d(
+            3.603,
+            0.654
+        ),
+        Rotation2d.kZero
+    );
 }
