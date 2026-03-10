@@ -93,6 +93,7 @@ public class RobotContainer {
     // codriver.povUp().whileTrue(climber.ClimberUpCommand());
     // codriver.povDown().whileTrue(climber.CliberDownCommand());
 
+    SmartDashboard.putData("Test Intake", new IntakeTest(intake));
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
     SmartDashboard.putData("Extend Intake" , intake.extendCommand());
     SmartDashboard.putData("Stow Intake" , intake.stowCommand());

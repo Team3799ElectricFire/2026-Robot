@@ -26,16 +26,18 @@ public class Constants {
     public static final double IntakeIgain = 0;
     public static final double IntakeDgain = 0;
     public static final double IntakePositionConversionFactor = 360.0;
-    public static final double IntakePositionOffset = 187.8/360.0;
-    public static final double IntakeForwardSoftLimit = 160.0;
-    public static final double IntakeReverseSoftLimit = 88.0;
-    public static final double IntakeExtendedPosition = 158.8;
+    public static final double IntakePositionOffset = 134.0/360.0;
+    public static final double IntakeForwardSoftLimit = 154.0;
+    public static final double IntakeExtendedPosition = 152.5;
     public static final double IntakeStowedPosition = 89.0;
+    public static final double IntakeReverseSoftLimit = 88.0;
     public static final double IntakeExtensionMaxSpeed = 0.25;
-    public static final double IntakeSpinPgain = 0; // TODO tune for velocity mode and change command back
-    public static final double IntakeSpinIgain = 0;
-    public static final double IntakeSpinDgain = 0;
-    public static final double IntakeSpinVelocityConversionFactor = (1.0/3.0) * (15.0/20.0);
+    public static final double IntakeSpinPgain = 0.0; // TODO tune for velocity mode and change command back
+    public static final double IntakeSpinIgain = 0.0;
+    public static final double IntakeSpinDgain = 0.0;
+    public static final double IntakeSpinKS = 0.25;
+    public static final double IntakeSpinKV = 0.0;
+    public static final double IntakeSpinVelocityConversionFactor = (15.0/20.0);
     public static final double IntakeSpeed = 1700.0;
 
     // climb pid

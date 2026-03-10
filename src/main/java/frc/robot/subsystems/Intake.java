@@ -6,11 +6,13 @@ package frc.robot.Subsystems;
 
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.epilogue.Logged;
@@ -20,9 +22,9 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase{
   private SparkMax ExtensionMotor = new SparkMax(Constants.IntakeExtensionMotorID, MotorType.kBrushless);
-  private SparkMax SpinningMotor = new SparkMax(Constants. IntakeSpinningMotorID, MotorType.kBrushless);
+  private SparkFlex SpinningMotor = new SparkFlex(Constants.IntakeSpinningMotorID, MotorType.kBrushless);
   private SparkMaxConfig ExtensionConfig = new SparkMaxConfig();
-  private SparkMaxConfig SpinningConfig = new SparkMaxConfig();
+  private SparkFlexConfig SpinningConfig = new SparkFlexConfig();
   private SparkClosedLoopController ExtensionPID = ExtensionMotor.getClosedLoopController();
   private SparkClosedLoopController SpinningPID = SpinningMotor.getClosedLoopController();
 
@@ -48,7 +50,8 @@ public class Intake extends SubsystemBase{
     SpinningConfig.closedLoop
       .pid(Constants.IntakeSpinPgain, Constants.IntakeSpinIgain, Constants.IntakeSpinDgain)
       .positionWrappingEnabled(false)
-      .outputRange(0.0, 1.0);
+      .outputRange(0.0, 1.0)
+      .feedForward.kS(Constants.IntakeSpinKS).kV(Constants.IntakeSpinKV);
     SpinningConfig.encoder
       .velocityConversionFactor(Constants.IntakeSpinVelocityConversionFactor);
     SpinningMotor.configure(SpinningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -59,10 +62,10 @@ public class Intake extends SubsystemBase{
     // This method will be called once per scheduler run
   }
   public void SpinPickUp(){
-    SpinningMotor.set(0.5);
+    SpinningMotor.set(0.33);
   }
   public void SpinOut(){
-    SpinningMotor.set(-0.5);
+    SpinningMotor.set(-0.33);
   }
   public void SpinAtSpeed(double speed){
     SpinningPID.setSetpoint(speed, ControlType.kVelocity);
@@ -99,6 +102,10 @@ public class Intake extends SubsystemBase{
     return ExtensionMotor.getAbsoluteEncoder().getPosition();
   }
 
+  public void spinVoltage(double voltage){
+    SpinningMotor.setVoltage(voltage);
+  }
+
   public Command spinAtSpeedCommand(double speed){
     return this.startEnd(()->{SpinAtSpeed(speed);}, this::SpinStop);
   }
@@ -114,10 +121,4 @@ public class Intake extends SubsystemBase{
   public Command stowCommand(){
     return this.runOnce(()->{ExtensionToPosition(Constants.IntakeStowedPosition);});
   }
-  // public Command ExtendOutCommand(){
-  //   return this.startEnd(this::ExtensionOut, this::ExtensionStop);
-  // }
-  // public Command ExtendInCommand(){
-  //   return this.startEnd(this::ExtensionIn, this::ExtensionStop);
-  // }
 }
