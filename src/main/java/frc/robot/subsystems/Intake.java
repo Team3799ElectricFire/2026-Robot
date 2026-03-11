@@ -35,7 +35,7 @@ public class Intake extends SubsystemBase{
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .pid(Constants.IntakePgain, Constants.IntakeIgain, Constants.IntakeDgain)
       .positionWrappingEnabled(false)
-      .outputRange(-1*Constants.IntakeExtensionMaxSpeed, Constants.IntakeExtensionMaxSpeed);
+      .outputRange(Constants.IntakeRetractMaxSpeed, Constants.IntakeExtensionMaxSpeed);
     ExtensionConfig.absoluteEncoder
       .positionConversionFactor(Constants.IntakePositionConversionFactor)
       .zeroOffset(Constants.IntakePositionOffset);

@@ -67,6 +67,8 @@ public class RobotContainer {
     new IntakePickUp(intake)
   );
 
+  Command stowIntakeCommand = intake.stowCommand().andThen(intake.spinPickupCommand()).until(intake::IsStowed);
+
   Command hubShootCommand = new ParallelCommandGroup(
     new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
     new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
@@ -82,7 +84,7 @@ public class RobotContainer {
     driver.rightTrigger().whileTrue(hubShootCommand);
     driver.leftTrigger().whileTrue(passShootCommand);
     driver.a().whileTrue(conveyor.ConveyorMoveCommand());
-    driver.b().onTrue(intake.stowCommand());
+    driver.b().onTrue(stowIntakeCommand);
     driver.povUp().whileTrue(climber.ClimberUpCommand());
     driver.povDown().whileTrue(climber.CliberDownCommand());
     

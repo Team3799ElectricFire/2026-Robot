@@ -24,14 +24,15 @@ public class Constants {
     // intake pid
     public static final double IntakePgain = 0.007;
     public static final double IntakeIgain = 0;
-    public static final double IntakeDgain = 0;
+    public static final double IntakeDgain = 0.000;
     public static final double IntakePositionConversionFactor = 360.0;
     public static final double IntakePositionOffset = 134.0/360.0;
-    public static final double IntakeForwardSoftLimit = 154.0;
-    public static final double IntakeExtendedPosition = 152.5;
+    public static final double IntakeForwardSoftLimit = 153.5;
+    public static final double IntakeExtendedPosition = 153.5;
     public static final double IntakeStowedPosition = 89.0;
     public static final double IntakeReverseSoftLimit = 88.0;
-    public static final double IntakeExtensionMaxSpeed = 0.25;
+    public static final double IntakeExtensionMaxSpeed = 0.30;
+    public static final double IntakeRetractMaxSpeed = -0.30;
     public static final double IntakeSpinPgain = 0.0; // TODO tune for velocity mode and change command back
     public static final double IntakeSpinIgain = 0.0;
     public static final double IntakeSpinDgain = 0.0;
