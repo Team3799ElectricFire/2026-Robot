@@ -37,8 +37,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
-
-    
   }
   
   @Override

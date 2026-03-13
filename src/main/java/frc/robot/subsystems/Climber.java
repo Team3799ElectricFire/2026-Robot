@@ -44,7 +44,7 @@ public class Climber extends SubsystemBase{
       .limitSwitchPositionSensor(FeedbackSensor.kPrimaryEncoder);
     ClimbConfig.softLimit
       .forwardSoftLimitEnabled(true)
-      .forwardSoftLimit(Constants.ClimbUpPosition + 0.1);
+      .forwardSoftLimit(Constants.ClimbUpPosition);
     ClimbMotor.configure(ClimbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -80,6 +80,10 @@ public class Climber extends SubsystemBase{
   @Logged
   public boolean AtBottom() {
     return ClimbMotor.getReverseLimitSwitch().isPressed();
+  }
+  @Logged
+  public boolean AtTop() {
+    return ClimbMotor.getForwardSoftLimit().isReached();
   }
 
   public Command ClimberUpCommand(){

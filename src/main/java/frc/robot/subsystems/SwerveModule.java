@@ -136,7 +136,7 @@ public class SwerveModule {
     }
 
     public void resetEncoders() {
-        DriveEncoder.setPosition(0);
+        // DriveEncoder.setPosition(0);
         SteerEncoder.setPosition(getVirtualSteerPosition());
     }
 

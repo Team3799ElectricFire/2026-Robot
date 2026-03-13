@@ -31,7 +31,7 @@ import frc.robot.Subsystems.Shooter;
 @Logged
 public class RobotContainer {
   private CommandXboxController driver = new CommandXboxController(0);
-  // private CommandXboxController codriver = new CommandXboxController(1);
+  private CommandXboxController codriver = new CommandXboxController(1);
   private Drivetrain drivetrain = new Drivetrain();
   private Cameras cameras = new Cameras(Cameras.camerasFromConfigs(VisionConstants.CONFIGS));
   private Climber climber = new Climber();
@@ -48,8 +48,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Shoot", conveyor.ConveyorMoveCommand().withTimeout(5.0));
     NamedCommands.registerCommand("Run Intake", new IntakePickUp(intake).withTimeout(10.0));
     NamedCommands.registerCommand("Stop Intake", intake.spinStopCommand());
-    NamedCommands.registerCommand("Run Flywheel", new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance).until(shooter::IsSpeed));
-    NamedCommands.registerCommand("Turn To Hub", new DriveShooting(drivetrain, ()->{return 0;}, ()->{return 0;}));
+    NamedCommands.registerCommand("Run Flywheel", new FlywheelSpinHub_AUTO(shooter, hood, drivetrain::getHubDistance));
+    NamedCommands.registerCommand("Turn To Hub", new DriveShooting_AUTO(drivetrain));
 
     configureBindings();
     
@@ -75,6 +75,11 @@ public class RobotContainer {
     // shooter.FlywheelToSpeedCommand(2600)
   );
 
+  Command noTrackingHubShotCommand = new ParallelCommandGroup(
+    // new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
+    shooter.FlywheelToSpeedCommand(2600)
+  );
+
   Command passShootCommand = new FlywheelSpinPass(shooter, hood);
 
   private void configureBindings() {
@@ -88,12 +93,14 @@ public class RobotContainer {
     driver.povUp().whileTrue(climber.ClimberUpCommand());
     driver.povDown().whileTrue(climber.CliberDownCommand());
     
-    // codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
-    // codriver.leftTrigger().whileTrue(passShootCommand);
-    // codriver.rightTrigger().whileTrue(hubShootCommand);
-    // codriver.rightBumper().whileTrue(intakingCommand);
-    // codriver.povUp().whileTrue(climber.ClimberUpCommand());
-    // codriver.povDown().whileTrue(climber.CliberDownCommand());
+    codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    codriver.b().onTrue(stowIntakeCommand);
+    codriver.leftTrigger().whileTrue(passShootCommand);
+    codriver.rightTrigger().whileTrue(hubShootCommand);
+    codriver.rightBumper().whileTrue(intakingCommand);
+    codriver.povUp().whileTrue(climber.ClimberUpCommand());
+    codriver.povDown().whileTrue(climber.CliberDownCommand());
+    codriver.y().whileTrue(noTrackingHubShotCommand);
 
     SmartDashboard.putData("Test Intake", new IntakeTest(intake));
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
