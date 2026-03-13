@@ -45,7 +45,7 @@ public class RobotContainer {
     // Named commands for pathplanner 
     NamedCommands.registerCommand("Climber Up", climber.CimberToPositionCommand(Constants.ClimbUpPosition));
     NamedCommands.registerCommand("Cliber Down", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
-    NamedCommands.registerCommand("Shoot", conveyor.ConveyorMoveCommand().withTimeout(5.0));
+    NamedCommands.registerCommand("Shoot", conveyor.ConveyorMoveCommand(shooter::getSpeed).withTimeout(5.0));
     NamedCommands.registerCommand("Run Intake", new IntakePickUp(intake).withTimeout(10.0));
     NamedCommands.registerCommand("Stop Intake", intake.spinStopCommand());
     NamedCommands.registerCommand("Run Flywheel", new FlywheelSpinHub_AUTO(shooter, hood, drivetrain::getHubDistance));
@@ -80,6 +80,11 @@ public class RobotContainer {
     shooter.FlywheelToSpeedCommand(2600)
   );
 
+  Command agitateFuelCommand = new ParallelCommandGroup(
+    conveyor.ConveyorMoveCommand(shooter::getSpeed),
+    new IntakeAgitateFuel(intake)
+  );
+
   Command passShootCommand = new FlywheelSpinPass(shooter, hood);
 
   private void configureBindings() {
@@ -88,12 +93,12 @@ public class RobotContainer {
     driver.rightBumper().whileTrue(intakingCommand);
     driver.rightTrigger().whileTrue(hubShootCommand);
     driver.leftTrigger().whileTrue(passShootCommand);
-    driver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    driver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     driver.b().onTrue(stowIntakeCommand);
     driver.povUp().whileTrue(climber.ClimberUpCommand());
     driver.povDown().whileTrue(climber.CliberDownCommand());
     
-    codriver.a().whileTrue(conveyor.ConveyorMoveCommand());
+    codriver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     codriver.b().onTrue(stowIntakeCommand);
     codriver.leftTrigger().whileTrue(passShootCommand);
     codriver.rightTrigger().whileTrue(hubShootCommand);
@@ -101,6 +106,7 @@ public class RobotContainer {
     codriver.povUp().whileTrue(climber.ClimberUpCommand());
     codriver.povDown().whileTrue(climber.CliberDownCommand());
     codriver.y().whileTrue(noTrackingHubShotCommand);
+    codriver.x().whileTrue(agitateFuelCommand);
 
     SmartDashboard.putData("Test Intake", new IntakeTest(intake));
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
@@ -111,6 +117,7 @@ public class RobotContainer {
     SmartDashboard.putData("Retract Climber", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
     SmartDashboard.putData("Zero Heading", drivetrain.ZeroHeadingCommand());
     SmartDashboard.putData("Reset to Starting Position", drivetrain.resetPoseCommand(Constants.StartingPose));
+    SmartDashboard.putData("Reset Swerve Encoders", drivetrain.resetEncodersCommand());
   }
 
   public Command getAutonomousCommand() {

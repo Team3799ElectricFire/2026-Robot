@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
@@ -51,13 +53,23 @@ public class Conveyor extends SubsystemBase {
     KickerMotor.set(0);
   }
 
-  public Command ConveyorMoveCommand(){
-    return this.startEnd(
+  public Command ConveyorMoveCommand(DoubleSupplier flywheelSpeedSupplier){
+    return this.runEnd(
       ()->{
-        FloorForward();
-        KickerForward();
+        double flywheelSpeed = flywheelSpeedSupplier.getAsDouble();
+
+        if (flywheelSpeed >= Constants.FlywheelMinShotSpeed){
+          // run conveyor to flywheel if flywheel is fast enough
+          FloorForward();
+          KickerForward();
+        } else {
+          // if flywheel is too slow, stop conveyor
+          FloorStop();
+        KickerStop();
+        }
       },
       ()->{
+        // end runnable, stop conveyor at end of command
         FloorStop();
         KickerStop();
       }

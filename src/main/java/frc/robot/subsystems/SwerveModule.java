@@ -26,6 +26,7 @@ public class SwerveModule {
     private SparkAnalogSensor SteerAnalogSensor;
     private RelativeEncoder DriveEncoder;
     private SparkClosedLoopController DrivePID, SteerPID;
+    @Logged
     private SwerveModuleState DesiredState = new SwerveModuleState(0.0, new Rotation2d());
     private double SteerOffset = 0;
 

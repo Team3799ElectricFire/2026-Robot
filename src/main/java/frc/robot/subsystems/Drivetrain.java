@@ -276,6 +276,10 @@ public class Drivetrain extends SubsystemBase{
     BackLeftModule.resetEncoders();
   }
 
+  public Command resetEncodersCommand() {
+    return this.runOnce(this::resetEncoders).ignoringDisable(true);
+  }
+
   public void setHeading(double newAngleDegrees) {
     Pidgey.setYaw(newAngleDegrees);
   }
