@@ -62,16 +62,16 @@ public class Constants {
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
-    public static final double SteerMotorPositionFactor = (2 * Math.PI) / (150.0 / 7.0); // radians per rotation
+    public static final double SteerMotorPositionFactor = (2 * Math.PI); // radians per rotation
 
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
     public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(19.3);
     public static final double kMaxAngularSpeed = Units.degreesToRadians(360);
-    public static final double kFrontRightChassisAngularOffset = Units.degreesToRadians(180.33); // CAN ID 7
-    public static final double kFrontLeftChassisAngularOffset = Units.degreesToRadians(98.98); // CAN ID 1
-    public static final double kBackRightChassisAngularOffset = Units.degreesToRadians(274.12); // CAN ID 5
-    public static final double kBackLeftChassisAngularOffset = Units.degreesToRadians(1.71);  // CAN ID 3
+    public static final double kFrontRightChassisAngularOffset = 3.710 / (2*Math.PI); // CAN ID 7
+    public static final double kFrontLeftChassisAngularOffset = 3.342 / (2*Math.PI); // CAN ID 1
+    public static final double kBackRightChassisAngularOffset = 5.201 / (2*Math.PI); // CAN ID 5
+    public static final double kBackLeftChassisAngularOffset = 0.527 / (2*Math.PI);  // CAN ID 3
     public static final int kSteeringMotorCurrentLimitAmps = 20;
     public static final int kDriveMotorCurrentLimitAmps = 40;
     

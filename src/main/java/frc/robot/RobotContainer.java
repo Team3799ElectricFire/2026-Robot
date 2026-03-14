@@ -117,7 +117,6 @@ public class RobotContainer {
     SmartDashboard.putData("Retract Climber", climber.CimberToPositionCommand(Constants.ClimbDownPosition));
     SmartDashboard.putData("Zero Heading", drivetrain.ZeroHeadingCommand());
     SmartDashboard.putData("Reset to Starting Position", drivetrain.resetPoseCommand(Constants.StartingPose));
-    SmartDashboard.putData("Reset Swerve Encoders", drivetrain.resetEncodersCommand());
   }
 
   public Command getAutonomousCommand() {
@@ -136,9 +135,5 @@ public class RobotContainer {
         VecBuilder.fill(0.1 / sample.weight(), 0.1 / sample.weight(), thetaStdDev)
       );
     }
-  }
-
-  public void resetEncoders(){
-    drivetrain.resetEncoders();
   }
 }

@@ -99,8 +99,6 @@ public class Drivetrain extends SubsystemBase{
         return false;
       },
       this);
-
-    resetEncoders();
   }
 
   @Override
@@ -267,17 +265,6 @@ public class Drivetrain extends SubsystemBase{
     FrontLeftModule.setDesiredState(moduleStates[1]);
     BackRightModule.setDesiredState(moduleStates[2]);
     BackLeftModule.setDesiredState(moduleStates[3]);
-  }
-
-  public void resetEncoders() {
-    FrontRightModule.resetEncoders();
-    FrontLeftModule.resetEncoders();
-    BackRightModule.resetEncoders();
-    BackLeftModule.resetEncoders();
-  }
-
-  public Command resetEncodersCommand() {
-    return this.runOnce(this::resetEncoders).ignoringDisable(true);
   }
 
   public void setHeading(double newAngleDegrees) {

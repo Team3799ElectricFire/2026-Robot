@@ -52,9 +52,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void disabledExit() {
-    m_robotContainer.resetEncoders();
-  }
+  public void disabledExit() {}
 
   @Override
   public void autonomousInit() {
