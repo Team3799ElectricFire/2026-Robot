@@ -7,6 +7,7 @@ package frc.robot.Commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Hood;
 import frc.robot.Subsystems.Shooter;
@@ -15,7 +16,8 @@ import frc.robot.Subsystems.Shooter;
 public class FlywheelSpinHub_AUTO extends Command {
   private Shooter flywheel;
   private Hood hood;
-  private DoubleSupplier hubSupplier; 
+  private DoubleSupplier hubSupplier;
+  private Timer onTargetTimer = new Timer();
   
   /** Creates a new FlywheelSpinHub_AUTO. */
   public FlywheelSpinHub_AUTO(Shooter flywheel, Hood hood, DoubleSupplier hubSupplier) {
@@ -40,6 +42,11 @@ public class FlywheelSpinHub_AUTO extends Command {
 
     flywheel.FlywheelToSpeed(Speed);
     hood.setPosition(Position);
+
+    boolean readyToShoot = hood.isPositionWhithinTolerance() & flywheel.IsSpeed();
+    if (!readyToShoot) {
+      onTargetTimer.restart();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -49,7 +56,7 @@ public class FlywheelSpinHub_AUTO extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hood.isPositionWhithinTolerance() & flywheel.IsSpeed();
+    return onTargetTimer.get() > 1.0;
   }
 
   private double CalcFlywheelSpeedFromDistance(double Distance){

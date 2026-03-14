@@ -17,7 +17,7 @@ public class IntakeAgitateFuel extends Command {
   private double minPos = Constants.IntakeStowedPosition;
   private double meanPos = (minPos + maxPos) / 2.0;
   private double amplitude = (maxPos - minPos) / 2.0;
-  private double period = 5.0; // seconds for full range of motion
+  private double period = 2.0; // seconds for full range of motion
 
   /** Creates a new IntakeAgitateFuel. */
   public IntakeAgitateFuel(Intake intake) {
