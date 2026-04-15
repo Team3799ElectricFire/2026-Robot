@@ -51,6 +51,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Run Flywheel", new FlywheelSpinHub_AUTO(shooter, hood, drivetrain::getHubDistance));
     NamedCommands.registerCommand("Stop Flywheel", new FlywheelStop(shooter, hood));
     NamedCommands.registerCommand("Turn To Hub", new DriveShooting_AUTO(drivetrain));
+    NamedCommands.registerCommand("Stow Intake", stowIntakeCommand);
 
     configureBindings();
     
