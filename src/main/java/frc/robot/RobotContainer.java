@@ -64,37 +64,47 @@ public class RobotContainer {
     drivetrain.setAlliance(color);
   }
 
-  Command intakingCommand = new ParallelCommandGroup(
-    // new DriveIntake(drivetrain,driver::getLeftY,driver::getLeftX),
-    new IntakePickUp(intake)
-  );
+  public Command intakingCommand(){
+    return new ParallelCommandGroup(
+      // new DriveIntake(drivetrain,driver::getLeftY,driver::getLeftX),
+      new IntakePickUp(intake)
+    );
+  }
 
-  Command stowIntakeCommand = intake.stowCommand().andThen(intake.spinPickupCommand()).until(intake::IsStowed);
+  Command stowIntakeCommand = intake.stowCommand().andThen(intake.spinPickupCommand()).until(intake::IsStowed).withTimeout(2.0);
 
-  Command hubShootCommand = new ParallelCommandGroup(
-    new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
-    new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
-    // shooter.FlywheelToSpeedCommand(2600)
-  );
+  public Command hubShootCommand(){
+    return new ParallelCommandGroup(
+      new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
+      new FlywheelSpinHub(shooter, hood, drivetrain::getHubDistance)
+      // shooter.FlywheelToSpeedCommand(2600)
+    );
+  }
 
-  Command noTrackingHubShotCommand = new ParallelCommandGroup(
-    // new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
-    shooter.FlywheelToSpeedCommand(2600)
-  );
+  public Command noTrackingHubShotCommand(){
+    return new ParallelCommandGroup(
+      // new DriveShooting(drivetrain,driver::getLeftY,driver::getLeftX),
+      shooter.FlywheelToSpeedCommand(2600)
+    );
+  } 
 
-  Command agitateFuelCommand = new ParallelCommandGroup(
-    conveyor.ConveyorMoveCommand(shooter::getSpeed),
-    new IntakeAgitateFuel(intake)
-  );
+  public Command agitateFuelCommand(){
+    return new ParallelCommandGroup(
+      conveyor.ConveyorMoveCommand(shooter::getSpeed),
+      new IntakeAgitateFuel(intake)
+    );
+  }
 
-  Command passShootCommand = new FlywheelSpinPass(shooter, hood);
+  public Command passShootCommand(){
+    return new FlywheelSpinPass(shooter, hood);
+  }
 
   private void configureBindings() {
     drivetrain.setDefaultCommand(new DriveDefault(drivetrain,driver::getLeftY, driver::getLeftX, driver::getRightX));
     
-    driver.rightBumper().whileTrue(intakingCommand);
-    driver.rightTrigger().whileTrue(hubShootCommand);
-    driver.leftTrigger().whileTrue(passShootCommand);
+    driver.rightBumper().whileTrue(intakingCommand());
+    driver.rightTrigger().whileTrue(hubShootCommand());
+    driver.leftTrigger().whileTrue(passShootCommand());
     driver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     driver.b().onTrue(stowIntakeCommand);
     driver.povUp().whileTrue(climber.ClimberUpCommand());
@@ -102,13 +112,13 @@ public class RobotContainer {
     
     codriver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     codriver.b().onTrue(stowIntakeCommand);
-    codriver.leftTrigger().whileTrue(passShootCommand);
-    codriver.rightTrigger().whileTrue(hubShootCommand);
-    codriver.rightBumper().whileTrue(intakingCommand);
+    codriver.leftTrigger().whileTrue(passShootCommand());
+    codriver.rightTrigger().whileTrue(hubShootCommand());
+    codriver.rightBumper().whileTrue(intakingCommand());
     codriver.povUp().whileTrue(climber.ClimberUpCommand());
     codriver.povDown().whileTrue(climber.CliberDownCommand());
-    codriver.y().whileTrue(noTrackingHubShotCommand);
-    codriver.x().whileTrue(agitateFuelCommand);
+    codriver.y().whileTrue(noTrackingHubShotCommand());
+    codriver.x().whileTrue(agitateFuelCommand());
 
     SmartDashboard.putData("Test Intake", new IntakeTest(intake));
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());

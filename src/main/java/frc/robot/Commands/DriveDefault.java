@@ -6,8 +6,6 @@ package frc.robot.Commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +20,6 @@ public class DriveDefault extends Command {
   private SlewRateLimiter YLimiter = new SlewRateLimiter(Constants.panRateOfChangeLimit);
   private SlewRateLimiter RotLimiter = new SlewRateLimiter(Constants.rotRateOfChangeLimit);
   private Rotation2d rotationTarget = null;
-  private PIDController rotPID = new PIDController(Constants.teleopTurningPgain, 0, Constants.teleopTurningDgain);
   
   /** Creates a new DriveDefault. */
   public DriveDefault(Drivetrain drivetrain, DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier rotSupplier) {
@@ -31,14 +28,14 @@ public class DriveDefault extends Command {
     this.YSupplier = ySupplier;
     this.RotSupplier = rotSupplier;
 
-    rotPID.enableContinuousInput(-1*Math.PI, Math.PI);
-
     addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    rotationTarget = null;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -64,11 +61,10 @@ public class DriveDefault extends Command {
       if (rotationTarget == null) {
         // Set target to most recent heading
         rotationTarget = drivetrain.getPose().getRotation();
-        rotPID.setSetpoint(MathUtil.angleModulus(rotationTarget.getRadians()));
       }
 
       // Calculate error between target and current heading
-      RotRawDemand = rotPID.calculate(MathUtil.angleModulus(drivetrain.getPose().getRotation().getRadians()));
+      RotRawDemand = rotationTarget.minus(drivetrain.getPose().getRotation()).getRadians() * Constants.teleopTurningPgain;
     } else {
       // Stopped driving OR started turning, stop trying to hold heading
       rotationTarget = null;

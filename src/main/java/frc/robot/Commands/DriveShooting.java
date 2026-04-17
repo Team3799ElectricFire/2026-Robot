@@ -56,7 +56,7 @@ public class DriveShooting extends Command {
     double yDemand = YLimiter.calculate(YRawDemand * Math.abs(YRawDemand));
     double rotDemand = rotPID.calculate(
       MathUtil.angleModulus(drivetrain.getPose().getRotation().getRadians()),
-      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians())
+      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians() + Math.PI)
     );
 
     // Drive

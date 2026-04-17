@@ -1,0 +1,66 @@
+{
+  "NetworkTables": {
+    "transitory": {
+      "LiveWindow": {
+        ".status": {
+          "open": true
+        }
+      },
+      "SmartDashboard": {
+        "Scheduler": {
+          "int[]##v_/SmartDashboard/Scheduler/Ids": {
+            "open": true
+          },
+          "open": true,
+          "string[]##v_/SmartDashboard/Scheduler/Names": {
+            "open": true
+          }
+        },
+        "open": true
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Extend Climber": "Command",
+      "/SmartDashboard/Extend Intake": "Command",
+      "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/PhotonAlerts": "Alerts",
+      "/SmartDashboard/Reset to Starting Position": "Command",
+      "/SmartDashboard/Retract Climber": "Command",
+      "/SmartDashboard/Scheduler": "Scheduler",
+      "/SmartDashboard/Spin Intake": "Command",
+      "/SmartDashboard/Stow Intake": "Command",
+      "/SmartDashboard/Test Flywheel": "Command",
+      "/SmartDashboard/Test Intake": "Command",
+      "/SmartDashboard/Zero Heading": "Command",
+      "Robot/m_robotContainer/autoChooser": "String Chooser"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "3799",
+    "visible": false
+  },
+  "Plots": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    }
+  }
+}
