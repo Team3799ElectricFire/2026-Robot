@@ -37,7 +37,7 @@ public class FlywheelSpinPass extends Command {
   @Override
   public void end(boolean interrupted) {
     flywheel.FlywheelStop();
-    hood.setPosition(0);
+    hood.setPosition(Constants.HoodDefaultPosition);
   }
 
   // Returns true when the command should end.

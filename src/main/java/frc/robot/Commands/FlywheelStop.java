@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Hood;
 import frc.robot.Subsystems.Shooter;
 
@@ -25,7 +26,7 @@ public class FlywheelStop extends Command {
   @Override
   public void initialize() {
     flywheel.FlywheelStop();
-    hood.setPosition(0.0);
+    hood.setPosition(Constants.HoodDefaultPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

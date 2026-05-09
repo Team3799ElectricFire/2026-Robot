@@ -53,21 +53,35 @@ public class Constants {
     public static final double ShooterPgain = 0.0007;
     public static final double ShooterIgain = 0.0;
     public static final double ShooterDgain = 0.0;
-    public static final double ShooterKs = 0.24;
-    public static final double ShooterKv = 0.0021054;
+    public static final double ShooterKs = 0.23;
+    public static final double ShooterKv = 0.00179515;
     public static final double FlywheelMinShotSpeed = 2000.0;
     public static final double FlywheelPassSpeed = 6000.0;
     public static final double HoodPassPosition = 0.7;
+    public static final double HoodDefaultPosition = 0.5;
 
     // Conversion factors
     public static final double DriveMotorPositionFactor = 0.0521375063; // meters
     public static final double DriveMotorVelocityFactor = DriveMotorPositionFactor/60.0; // meters per sec
     public static final double SteerMotorPositionFactor = (2 * Math.PI); // radians per rotation
 
+    // Kinematics
+    public static final double WheelBase = Units.inchesToMeters(21.75);
+    public static final Translation2d FrontRightTranslation = new Translation2d(+WheelBase * 0.5, -WheelBase * 0.5);
+    public static final Translation2d FrontLeftTranslation = new Translation2d(+WheelBase * 0.5, +WheelBase * 0.5);
+    public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase * 0.5, -WheelBase * 0.5);
+    public static final Translation2d BackLeftTranslation = new Translation2d(-WheelBase * 0.5, +WheelBase * 0.5);
+    public static final double WheelLocationRadius = FrontRightTranslation.getNorm();
+    public static SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        FrontRightTranslation,
+        FrontLeftTranslation,
+        BackRightTranslation,
+        BackLeftTranslation);
+    
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
     public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(19.3);
-    public static final double kMaxAngularSpeed = Units.degreesToRadians(360);
+    public static final double kMaxAngularSpeed = kMaxSpeedMetersPerSecond / WheelLocationRadius; // Units.degreesToRadians(360);
     public static final double kFrontRightChassisAngularOffset = 3.710 / (2*Math.PI); // CAN ID 7
     public static final double kFrontLeftChassisAngularOffset = 3.342 / (2*Math.PI); // CAN ID 1
     public static final double kBackRightChassisAngularOffset = 5.201 / (2*Math.PI); // CAN ID 5
@@ -79,8 +93,8 @@ public class Constants {
     public static final double panRateOfChangeLimit = 10.0;
     public static final double rotRateOfChangeLimit = 10.0;
     public static final double minThumbstickMagnitude = 0.1;
-    public static final double teleopTurningPgain = 5.73;
-    public static final double teleopTurningDgain = 0.573;
+    public static final double teleopTurningPgain = 3.00;
+    public static final double teleopTurningDgain = 0.0;
 
     // CanbusID
     public static final int FrontRightDriveMotorID = 8;
@@ -103,18 +117,6 @@ public class Constants {
     // pwm channel
     public static final int LeftHoodServoID = 0;
     public static final int RightHoodServoID = 1;
-
-     // Kinematics
-    public static final double WheelBase = Units.inchesToMeters(21.75);
-    public static final Translation2d FrontRightTranslation = new Translation2d(+WheelBase * 0.5, -WheelBase * 0.5);
-    public static final Translation2d FrontLeftTranslation = new Translation2d(+WheelBase * 0.5, +WheelBase * 0.5);
-    public static final Translation2d BackRightTranslation = new Translation2d(-WheelBase * 0.5, -WheelBase * 0.5);
-    public static final Translation2d BackLeftTranslation = new Translation2d(-WheelBase * 0.5, +WheelBase * 0.5);
-    public static SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        FrontRightTranslation,
-        FrontLeftTranslation,
-        BackRightTranslation,
-        BackLeftTranslation);
 
     // Path Planner
     public static final double MassKG = 57;

@@ -6,8 +6,8 @@ package frc.robot.Commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Hood;
 import frc.robot.Subsystems.Shooter;
 
@@ -35,8 +35,8 @@ public class FlywheelSpinHub extends Command {
   public void execute() {
     double HubDistance = hubSupplier.getAsDouble();
 
-    double Speed = CalcFlywheelSpeedFromDistance(HubDistance);
-    double Position = CalcHoodPositionFromDistance(HubDistance);
+    double Speed = flywheel.CalcFlywheelSpeedFromDistance(HubDistance);
+    double Position = hood.CalcHoodPositionFromDistance(HubDistance);
 
     flywheel.FlywheelToSpeed(Speed);
     hood.setPosition(Position);
@@ -46,7 +46,7 @@ public class FlywheelSpinHub extends Command {
   @Override
   public void end(boolean interrupted) {
     flywheel.FlywheelStop();
-    hood.setPosition(0);
+    hood.setPosition(Constants.HoodDefaultPosition);
   }
 
   // Returns true when the command should end.
@@ -54,18 +54,4 @@ public class FlywheelSpinHub extends Command {
   public boolean isFinished() {
     return false;
   }
-
-  private double CalcFlywheelSpeedFromDistance(double Distance){
-    double distInches = Units.metersToInches(Distance);
-
-    // return 0.19115 * distInches * distInches - 37.58922 * distInches + 4188.67239;
-    return 
-      -0.000316098 * Math.pow(distInches,3) 
-      + 0.131936 * Math.pow(distInches,2)
-      - 10.08891 * distInches
-      + 2485.24221;
-  }
-  private double CalcHoodPositionFromDistance(double Distance){
-    return 0; // Always zero when shooting at Hub (from testing)
-  } 
 }

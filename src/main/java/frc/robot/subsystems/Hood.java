@@ -29,9 +29,9 @@ public class Hood extends SubsystemBase{
   private static final double kMaxPosition = 0.77;
   private static final double kPositionTolerance = 0.01;
   @Logged
-  private double currentPosition = 0.0;
+  private double currentPosition = Constants.HoodDefaultPosition;
   @Logged
-  private double targetPosition = 0.0;
+  private double targetPosition = Constants.HoodDefaultPosition;
   private Time lastUpdateTime = Seconds.of(0.0);
 
   /** Creates a new Hood. */
@@ -80,4 +80,8 @@ public class Hood extends SubsystemBase{
   public void periodic() {
     updateCurrentPosition();
   }
+
+  public double CalcHoodPositionFromDistance(double Distance){
+    return Constants.HoodDefaultPosition; 
+  } 
 }

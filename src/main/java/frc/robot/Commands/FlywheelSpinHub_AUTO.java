@@ -6,7 +6,6 @@ package frc.robot.Commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Hood;
@@ -37,8 +36,8 @@ public class FlywheelSpinHub_AUTO extends Command {
   public void execute() {
     double HubDistance = hubSupplier.getAsDouble();
 
-    double Speed = CalcFlywheelSpeedFromDistance(HubDistance);
-    double Position = CalcHoodPositionFromDistance(HubDistance);
+    double Speed = flywheel.CalcFlywheelSpeedFromDistance(HubDistance);
+    double Position = hood.CalcHoodPositionFromDistance(HubDistance);
 
     flywheel.FlywheelToSpeed(Speed);
     hood.setPosition(Position);
@@ -58,18 +57,4 @@ public class FlywheelSpinHub_AUTO extends Command {
   public boolean isFinished() {
     return onTargetTimer.get() > 1.0;
   }
-
-  private double CalcFlywheelSpeedFromDistance(double Distance){
-    double distInches = Units.metersToInches(Distance);
-
-    // return 0.19115 * distInches * distInches - 37.58922 * distInches + 4188.67239;
-    return 
-      -0.000316098 * Math.pow(distInches,3) 
-      + 0.131936 * Math.pow(distInches,2)
-      - 10.08891 * distInches
-      + 2485.24221;
-  }
-  private double CalcHoodPositionFromDistance(double Distance){
-    return 0; // Always zero when shooting at Hub (from testing)
-  } 
 }

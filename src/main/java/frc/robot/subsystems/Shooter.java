@@ -15,6 +15,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -76,6 +77,17 @@ public class Shooter extends SubsystemBase {
   public double getTargetSpeed(){
     return FlywheelPID.getSetpoint();
   }
+
+  public double CalcFlywheelSpeedFromDistance(double Distance){
+    double distInches = Units.metersToInches(Distance);
+
+    return 
+      0.00106805 * Math.pow(distInches,3) 
+      - 0.414653 * Math.pow(distInches,2)
+      + 58.8805 * distInches
+      - 243.62817;
+  }
+
   public Command FlywheelToSpeedCommand(double speedRpm){
     return this.startEnd(
       () -> {
