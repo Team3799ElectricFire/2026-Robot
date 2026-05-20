@@ -66,8 +66,11 @@ public class SwerveModule {
             .p(Constants.DrivingPgain)
             .i(Constants.DrivingIgain)
             .d(Constants.DrivingDgain)
-            .outputRange(-1, 1)
-            .feedForward.kV(Constants.DrivingFFgain);
+            .iZone(Constants.DrivingIzone)
+            .outputRange(-1, 1);
+        DriveConfig.closedLoop.feedForward
+            .kS(Constants.DrivingKs)
+            .kV(Constants.DrivingKv);
         DriveMotor.configure(DriveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         // encoders

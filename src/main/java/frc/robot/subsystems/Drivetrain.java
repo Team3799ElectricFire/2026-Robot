@@ -65,7 +65,6 @@ public class Drivetrain extends SubsystemBase{
   );
 
   private Translation2d RotationCenter = new Translation2d();
-  private double MaxSpeed = Constants.kMaxSpeedMetersPerSecond;
   
   private Alliance OurAlliance = Alliance.Red;
   @Logged 
@@ -152,6 +151,7 @@ public class Drivetrain extends SubsystemBase{
     poseEstimator.addVisionMeasurement(visionRobotPoseMeters, timestampSeconds);
   }
 
+  @Logged
   public ChassisSpeeds getRobotRelativeSpeeds() {
     return Constants.kDriveKinematics.toChassisSpeeds(getModuleState());
   }
@@ -186,7 +186,7 @@ public class Drivetrain extends SubsystemBase{
     SwerveModuleState[] moduleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds, RotationCenter);
 
     // desaturateWheelSpeed() is changing the value of moduleStates, not returning a new variable
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MaxSpeed); 
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.kMaxSpeedMetersPerSecond); 
 
     FrontRightModule.setDesiredState(moduleStates[0]);
     FrontLeftModule.setDesiredState(moduleStates[1]);
@@ -204,7 +204,7 @@ public class Drivetrain extends SubsystemBase{
     SwerveModuleState[] moduleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds, RotationCenter);
 
     // desaturateWheelSpeed() is changing the value of moduleStates, not returning a new variable
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,MaxSpeed); 
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,Constants.kMaxSpeedMetersPerSecond); 
 
     FrontRightModule.setDesiredState(moduleStates[0]);
     FrontLeftModule.setDesiredState(moduleStates[1]);
@@ -246,7 +246,7 @@ public class Drivetrain extends SubsystemBase{
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,MaxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,Constants.kMaxSpeedMetersPerSecond);
 
     FrontRightModule.setDesiredState(desiredStates[0]);
     FrontLeftModule.setDesiredState(desiredStates[1]);
@@ -257,9 +257,8 @@ public class Drivetrain extends SubsystemBase{
   public void setChassisSpeeds(ChassisSpeeds desiredSpeeds) {
     SwerveModuleState[] moduleStates = Constants.kDriveKinematics.toSwerveModuleStates(desiredSpeeds, RotationCenter);
 
-    // desaturateWheelSpeed() is changing the value of moduleStates, not returning a
-    // new variable
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MaxSpeed);
+    // desaturateWheelSpeed() is changing the value of moduleStates, not returning a new variable
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.kMaxSpeedMetersPerSecond);
     
     FrontRightModule.setDesiredState(moduleStates[0]);
     FrontLeftModule.setDesiredState(moduleStates[1]);
@@ -292,40 +291,6 @@ public class Drivetrain extends SubsystemBase{
 
   public double getRoll() {
     return Pidgey.getRoll().getValueAsDouble();
-  }
-
-  public Command setDriveSpeedCommand(double newSpeed) {
-    return runOnce(() -> {
-      MaxSpeed = newSpeed;
-    }).asProxy();
-  }
-
-  public void setHighSpeed() {
-    MaxSpeed = Constants.HighSpeedMetersPerSecond;
-  }
-
-  public Command setHgihSpeedCommand() {
-    return runOnce(() -> {
-      setHighSpeed();
-    }).asProxy();
-  }
-
-  public void setLowSpeed() {
-   MaxSpeed = Constants.LowSpeedMetersPerSecond;
-  }
-
-  public Command setLowSpeedCommand() {
-    return runOnce(() -> {
-      setLowSpeed();
-    }).asProxy();
-  }
-
-  public void toggleHiLoSpeed() {
-    if (MaxSpeed == Constants.LowSpeedMetersPerSecond) {
-      setHighSpeed();
-    } else {
-      setLowSpeed();
-    }
   }
 
   public void setRotationCenterGamePiece(Translation2d newCenter) {

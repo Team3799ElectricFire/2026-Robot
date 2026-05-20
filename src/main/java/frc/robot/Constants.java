@@ -16,10 +16,12 @@ public class Constants {
     public static final double SteeringPgain = 2.5;
     public static final double SteeringIgain = 0.001;
     public static final double SteeringDgain = 3; // Max derivative gain is 3 (according to REV hardware client)
-    public static final double DrivingPgain = 0.1;
+    public static final double DrivingPgain = 0.25;
     public static final double DrivingIgain = 0;
     public static final double DrivingDgain = 0;
-    public static final double DrivingFFgain = 1.0/565.0;
+    public static final double DrivingIzone = 0.25;
+    public static final double DrivingKs = 0.12;
+    public static final double DrivingKv = 2.02708;
 
     // intake pid
     public static final double IntakePgain = 0.007;
