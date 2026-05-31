@@ -82,7 +82,7 @@ public class Constants {
     
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(19.3);
+    public static final double kMaxSpeedMetersPerSecond = 3.0; //Units.feetToMeters(19.3); // 19.3 ft/sec -> 5.88 m/sec
     public static final double kMaxAngularSpeed = kMaxSpeedMetersPerSecond / WheelLocationRadius; // Units.degreesToRadians(360);
     public static final double kFrontRightChassisAngularOffset = 3.710 / (2*Math.PI); // CAN ID 7
     public static final double kFrontLeftChassisAngularOffset = 3.342 / (2*Math.PI); // CAN ID 1
@@ -95,8 +95,8 @@ public class Constants {
     public static final double panRateOfChangeLimit = 10.0;
     public static final double rotRateOfChangeLimit = 10.0;
     public static final double minThumbstickMagnitude = 0.1;
-    public static final double teleopTurningPgain = 3.00;
-    public static final double teleopTurningDgain = 0.0;
+    public static final double teleopTurningPgain = 1.0;
+    public static final double teleopTurningDgain = 0.01;
 
     // CanbusID
     public static final int FrontRightDriveMotorID = 8;
