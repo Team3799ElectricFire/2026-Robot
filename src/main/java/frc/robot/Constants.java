@@ -35,13 +35,13 @@ public class Constants {
     public static final double IntakeReverseSoftLimit = 88.0;
     public static final double IntakeExtensionMaxSpeed = 0.30;
     public static final double IntakeRetractMaxSpeed = -0.30;
-    public static final double IntakeSpinPgain = 0.0; // TODO tune for velocity mode and change command back
+    public static final double IntakeSpinPgain = 0.0003;
     public static final double IntakeSpinIgain = 0.0;
     public static final double IntakeSpinDgain = 0.0;
-    public static final double IntakeSpinKS = 0.25;
-    public static final double IntakeSpinKV = 0.0;
+    public static final double IntakeSpinKS = 0.24;
+    public static final double IntakeSpinKV = 0.00241252;
     public static final double IntakeSpinVelocityConversionFactor = (15.0/20.0);
-    public static final double IntakeSpeed = 1700.0;
+    public static final double IntakeSpeed = 1450.0;
 
     // climb pid
     public static final double ClimberPgain = 1.25;

@@ -23,8 +23,8 @@ public class IntakePickUp extends Command {
   @Override
   public void initialize() {
     intake.ExtensionToPosition(Constants.IntakeExtendedPosition);
-    // intake.SpinAtSpeed(Constants.IntakeSpeed);
-    intake.SpinPickUp();
+    intake.SpinAtSpeed(Constants.IntakeSpeed);
+    // intake.SpinPickUp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
