@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.*;
 // import frc.robot.Subsystems.*;
@@ -31,7 +32,7 @@ import frc.robot.Subsystems.Shooter;
 @Logged
 public class RobotContainer {
   private CommandXboxController driver = new CommandXboxController(0);
-  private CommandXboxController codriver = new CommandXboxController(1);
+  // private CommandXboxController codriver = new CommandXboxController(1); // Remove second controller for demos
   private Drivetrain drivetrain = new Drivetrain();
   private Cameras cameras = new Cameras(Cameras.camerasFromConfigs(VisionConstants.CONFIGS));
   private Climber climber = new Climber();
@@ -103,22 +104,22 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DriveDefault(drivetrain,driver::getLeftY, driver::getLeftX, driver::getRightX));
     
     driver.rightBumper().whileTrue(intakingCommand());
-    driver.rightTrigger().whileTrue(hubShootCommand());
-    driver.leftTrigger().whileTrue(passShootCommand());
+    driver.rightTrigger().whileTrue(noTrackingHubShotCommand()); // No Hub to track at demos
+    // driver.leftTrigger().whileTrue(passShootCommand()); // Do not shoot forward at demos
     driver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     driver.b().onTrue(stowIntakeCommand);
-    driver.povUp().whileTrue(climber.ClimberUpCommand());
-    driver.povDown().whileTrue(climber.CliberDownCommand());
+    // driver.povUp().whileTrue(climber.ClimberUpCommand()); // Disable climber for demos
+    // driver.povDown().whileTrue(climber.CliberDownCommand());
     
-    codriver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
-    codriver.b().onTrue(stowIntakeCommand);
-    codriver.leftTrigger().whileTrue(passShootCommand());
-    codriver.rightTrigger().whileTrue(hubShootCommand());
-    codriver.rightBumper().whileTrue(intakingCommand());
-    codriver.povUp().whileTrue(climber.ClimberUpCommand());
-    codriver.povDown().whileTrue(climber.CliberDownCommand());
-    codriver.y().whileTrue(noTrackingHubShotCommand());
-    codriver.x().whileTrue(agitateFuelCommand());
+    // codriver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
+    // codriver.b().onTrue(stowIntakeCommand);
+    // codriver.leftTrigger().whileTrue(passShootCommand());
+    // codriver.rightTrigger().whileTrue(hubShootCommand());
+    // codriver.rightBumper().whileTrue(intakingCommand());
+    // codriver.povUp().whileTrue(climber.ClimberUpCommand());
+    // codriver.povDown().whileTrue(climber.CliberDownCommand());
+    // codriver.y().whileTrue(noTrackingHubShotCommand());
+    // codriver.x().whileTrue(agitateFuelCommand());
 
     SmartDashboard.putData("Test Intake", new IntakeTest(intake));
     SmartDashboard.putData("Spin Intake", intake.spinPickupCommand());
@@ -132,7 +133,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-     return autoChooser.getSelected();
+    //  return autoChooser.getSelected();
+    return new WaitCommand(1.0); // Remove auto choices for demos
   }
 
   public void correctOdometry() {
