@@ -54,9 +54,11 @@ public class DriveShooting extends Command {
 
     double xDemand = XLimiter.calculate(XRawDemand * Math.abs(XRawDemand));
     double yDemand = YLimiter.calculate(YRawDemand * Math.abs(YRawDemand));
+
+    // HubAngle comes from Drivetrain pre-rotated so tracking it will point back of robot at hub for shooting
     double rotDemand = rotPID.calculate(
       MathUtil.angleModulus(drivetrain.getPose().getRotation().getRadians()),
-      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians() + Math.PI)
+      MathUtil.angleModulus(drivetrain.getHubAngle().getRadians())
     );
 
     // Drive

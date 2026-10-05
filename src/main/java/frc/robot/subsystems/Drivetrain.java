@@ -109,7 +109,9 @@ public class Drivetrain extends SubsystemBase{
 
     Translation2d hubCenter = (OurAlliance == Alliance.Blue) ? Constants.kBlueHub : Constants.kRedHub;
     Translation2d robot2HubTranslation = hubCenter.minus(getPose().getTranslation());
-    HubAngle = robot2HubTranslation.getAngle();
+
+    // Flip HubAngle by 180deg to track back of robot facing hub
+    HubAngle = robot2HubTranslation.getAngle().rotateBy(Rotation2d.k180deg);
     HubDistance = robot2HubTranslation.getNorm();
     
     FacingHub = MathUtil.isNear(

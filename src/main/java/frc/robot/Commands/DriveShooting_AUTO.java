@@ -32,6 +32,7 @@ public class DriveShooting_AUTO extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // HubAngle comes from Drivetrain pre-rotated so tracking it will point back of robot at hub for shooting
     double rotDemand = rotPID.calculate(
       MathUtil.angleModulus(drivetrain.getPose().getRotation().getRadians()),
       MathUtil.angleModulus(drivetrain.getHubAngle().getRadians())
