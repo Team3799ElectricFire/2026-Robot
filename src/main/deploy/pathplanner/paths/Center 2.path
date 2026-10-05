@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.05944365192582,
-        "y": 2.7993580599144083
+        "x": 3.443880171184022,
+        "y": 3.9897146932952925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8518171459017236,
-        "y": 1.8486472165409138
+        "x": 2.5129836514776542,
+        "y": 3.624431693966592
       },
       "isLocked": false,
-      "linkedName": "Shoot Point"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.6533855421686747,
-        "y": 0.6583373493975899
+        "x": 2.201768901569186,
+        "y": 5.632924393723252
       },
       "prevControl": {
-        "x": 1.487406875474921,
-        "y": 0.6583373493975898
+        "x": 0.9725962910128385,
+        "y": 5.490599144079885
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -53,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -160.0
+    "rotation": 176.56636963754946
   },
   "useDefaultConstraints": true
 }
