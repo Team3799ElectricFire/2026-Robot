@@ -83,7 +83,7 @@ public class Constants {
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
     public static final double kMaxSpeedMetersPerSecond = 3.0; //Units.feetToMeters(19.3); // 19.3 ft/sec -> 5.88 m/sec
-    public static final double kMaxAngularSpeed = kMaxSpeedMetersPerSecond / WheelLocationRadius; // Units.degreesToRadians(360);
+    public static final double kMaxAngularSpeed = 8.0; //kMaxSpeedMetersPerSecond / WheelLocationRadius; // Units.degreesToRadians(360);
     public static final double kFrontRightChassisAngularOffset = 3.710 / (2*Math.PI); // CAN ID 7
     public static final double kFrontLeftChassisAngularOffset = 3.342 / (2*Math.PI); // CAN ID 1
     public static final double kBackRightChassisAngularOffset = 5.201 / (2*Math.PI); // CAN ID 5
