@@ -97,6 +97,7 @@ public class Constants {
     public static final double minThumbstickMagnitude = 0.1;
     public static final double teleopTurningPgain = 1.0;
     public static final double teleopTurningDgain = 0.01;
+    public static final double teleopHeadingGain = 2.0;
 
     // CanbusID
     public static final int FrontRightDriveMotorID = 8;

@@ -64,7 +64,7 @@ public class DriveDefault extends Command {
       }
 
       // Calculate error between target and current heading
-      RotRawDemand = rotationTarget.minus(drivetrain.getPose().getRotation()).getRadians() * Constants.teleopTurningPgain;
+      RotRawDemand = rotationTarget.minus(drivetrain.getPose().getRotation()).getRadians() * Constants.teleopHeadingGain;
     } else {
       // Stopped driving OR started turning, stop trying to hold heading
       rotationTarget = null;
