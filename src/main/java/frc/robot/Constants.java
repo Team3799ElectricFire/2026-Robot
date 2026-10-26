@@ -82,7 +82,7 @@ public class Constants {
     
     // swerves limits
     public static final double kMinSpeedMetersPerSecond = 0.1;
-    public static final double kMaxSpeedMetersPerSecond = 3.0; //Units.feetToMeters(19.3); // 19.3 ft/sec -> 5.88 m/sec
+    public static final double kMaxSpeedMetersPerSecond = 4.0; //Units.feetToMeters(19.3); // 19.3 ft/sec -> 5.88 m/sec
     public static final double kMaxAngularSpeed = 8.0; //kMaxSpeedMetersPerSecond / WheelLocationRadius; // Units.degreesToRadians(360);
     public static final double kFrontRightChassisAngularOffset = 3.710 / (2*Math.PI); // CAN ID 7
     public static final double kFrontLeftChassisAngularOffset = 3.342 / (2*Math.PI); // CAN ID 1
@@ -137,7 +137,7 @@ public class Constants {
         SwerveConfig,
         FrontRightTranslation, FrontLeftTranslation, BackRightTranslation, BackLeftTranslation);
     public static final PIDConstants TranslationPIDconstants = new PIDConstants(
-        30,
+        50.0,
         0.75,
         0.0);
     public static final PIDConstants RotationPIDconstants = new PIDConstants(

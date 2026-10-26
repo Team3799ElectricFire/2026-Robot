@@ -52,6 +52,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Stop Flywheel", new FlywheelStop(shooter, hood));
     NamedCommands.registerCommand("Turn To Hub", new DriveShooting_AUTO(drivetrain));
     NamedCommands.registerCommand("Stow Intake", stowIntakeCommand);
+    NamedCommands.registerCommand("Back Up", drivetrain.DriveBackwardCommand());
 
     configureBindings();
     
@@ -112,7 +113,7 @@ public class RobotContainer {
     
     codriver.a().whileTrue(conveyor.ConveyorMoveCommand(shooter::getSpeed));
     codriver.b().onTrue(stowIntakeCommand);
-    codriver.leftTrigger().whileTrue(passShootCommand());
+    codriver.leftTrigger().whileTrue(noTrackingHubShotCommand());
     codriver.rightTrigger().whileTrue(hubShootCommand());
     codriver.rightBumper().whileTrue(intakingCommand());
     codriver.povUp().whileTrue(climber.ClimberUpCommand());

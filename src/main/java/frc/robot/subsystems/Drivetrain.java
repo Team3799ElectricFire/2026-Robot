@@ -302,4 +302,10 @@ public class Drivetrain extends SubsystemBase{
   public void resetRotationCenterRobot() {
     RotationCenter = new Translation2d();
   }
+
+  public Command DriveBackwardCommand() {
+    return this.run(() -> {
+      driveFieldRelative(-0.5, 0.0, 0.0);
+    }).withTimeout(1.0);
+  }
 }
